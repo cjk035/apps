@@ -178,6 +178,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        @JavascriptInterface
+        public void vibrate() {
+
+            vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+            vibrator.vibrate(new long[]{100, 200}, -1);
+
+        }
+
     }
 
 }
