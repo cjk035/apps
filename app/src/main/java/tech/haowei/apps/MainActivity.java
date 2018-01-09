@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.Service;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView titleView;
     public TextView beforeButton;
     public TextView afterButton;
+    public RelativeLayout rightView;
     public RelativeLayout navigatorView;
     public Vibrator vibrator;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         titleView = (TextView) findViewById(R.id.navigatorTitle);
         navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
+        rightView = (RelativeLayout) findViewById(R.id.rightSide);
 
         Window window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
@@ -154,11 +157,19 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
+                    // View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                     Window window = getWindow();
                     window.addFlags(WindowManager.LayoutParams
-                            .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                            .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
                     window.setStatusBarColor(Color.parseColor(color));
                     navigatorView.setBackgroundColor(Color.parseColor(color));
+
+                    GradientDrawable gd = new GradientDrawable();
+                    gd.setColor(Color.parseColor("#aaaaaaaa"));
+                    gd.setCornerRadius(rightView.getHeight());
+                    gd.setStroke(1, Color.parseColor("white"));
+                    rightView.setBackground(gd);
 
                     beforeButton.setTextColor(Color.parseColor("white"));
                     afterButton.setTextColor(Color.parseColor("white"));
