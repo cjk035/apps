@@ -1,10 +1,31 @@
-# 中文名：H5 APP ( Android Apps )
+##Android Apps 是什么?
+H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，开发者可以做出流畅的H5 APP，实现即用即开，无需要额外安装
 
-这是一个开源项目，你可以做非商业用途，你也可以参与其他编写，你也可以捐助此项目。
-This is an open source project, you can do non-commercial use, you can also participate in other preparation, you can donate this project.
 
-apps.setNavigatorTitle();       // 设置状态栏标题
-apps.setNavigatorBarColor();    // 设置状态栏颜色
-apps.load(); // 加载URL
-apps.vibrate(); // 短震动
+##测试JS API
+* apps.setNavigatorTitle(); // 设置状态栏标题
+* apps.setNavigatorBarColor(); // 设置状态栏颜色
+* apps.load(); // 加载 URL
+* apps.vibrate(); // 震动
 
+##有问题反馈
+在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
+
+* 邮箱 boss@haowei.me
+* 
+
+##捐助开发者
+这是一个`开源项目`，你可以做非商业用途，你也可以参编写，你也可以捐助此项目。
+
+
+##关于作者
+
+```javascript
+
+  var name = "我是好为";
+  apps.addEventListener('ready', function() {
+    apps.setNavigatorTitle('我的小程序员');
+  });
+  
+  
+```
