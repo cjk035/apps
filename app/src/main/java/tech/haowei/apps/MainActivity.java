@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
                     vibrator.vibrate(new long[]{100, 200}, -1);
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return false;
@@ -184,6 +184,16 @@ public class MainActivity extends AppCompatActivity {
             vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
             vibrator.vibrate(new long[]{100, 200}, -1);
 
+        }
+
+        @JavascriptInterface
+        public void load(final String url) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    webView.loadUrl(url);
+                }
+            });
         }
 
     }
