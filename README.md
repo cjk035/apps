@@ -8,6 +8,7 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 * apps.setNavigatorBarColor(); // 设置状态栏颜色
 * apps.load(); // 加载 URL
 * apps.vibrate(); // 震动
+* apps.
 
 ### 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
@@ -18,7 +19,7 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 这是一个`开源项目`，你可以做非商业用途，你可以参与编写，你也可以捐助此项目。
 
 
-### JS API
+### HTML代码
 ```javascript
 
 const apps = {
