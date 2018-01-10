@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Service;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 
         titleView = (TextView) findViewById(R.id.navigatorTitle);
         navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     webView.clearCache(true);
                     webView.reload();
-                    vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
-                    vibrator.vibrate(new long[]{100, 200}, -1);
+                    if (vibrator != null) vibrator.vibrate(new long[]{100, 200}, -1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -215,8 +214,7 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void vibrate() {
 
-            vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
-            vibrator.vibrate(new long[]{100, 200}, -1);
+            if (vibrator != null) vibrator.vibrate(new long[]{100, 200}, -1);
 
         }
 
