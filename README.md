@@ -20,23 +20,25 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 
 ```javascript
 
-  const apps = {
+const apps = {
 
-    fn: {},
+	fn: null,
 
-    addEventListener: function(type, fn) {
-        if (!this.fn[type]) this.fn[type] = fn;
-    },
+	addEventListener: function(type, fn) {
+		if (!this.fn) this.fn = {};
+		if (!this.fn[type]) this.fn[type] = [];
+		this.fn[type].push(fn);
+	},
 
-    dispatchEvent: function(event) {
-        if (!this.fn[event.type]) return ;
-        var listener = this.fn[event.type];
-        for (var i = 0; i < listener.length; i++) {
-            if (this.fn[event.type]) this.fn[event.type].call(this, event);
-        }
-    }
+	dispatchEvent: function(event) {
+		if (!this.fn[event.type]) return;
+		console.log(22222);
+		var listener = this.fn[event.type];
+		for (var i = 0; i < listener.length; i++) {
+			if (typeof listener[i] == "function") listener[i].call(this, event);
+		}
+	}
 
-  };
-  
-  
+};
+
 ```
