@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public RelativeLayout rightView;
     public RelativeLayout navigatorView;
     public Vibrator vibrator;
+    public Window window;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
         rightView = (RelativeLayout) findViewById(R.id.rightSide);
 
-        Window window = getWindow();
+        window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
                 .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         window.addFlags(WindowManager.LayoutParams
@@ -158,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 
                     // View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    Window window = getWindow();
-
                     window.addFlags(WindowManager.LayoutParams
                             .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
@@ -201,6 +200,25 @@ public class MainActivity extends AppCompatActivity {
                     webView.loadUrl(url);
                 }
             });
+        }
+
+        @JavascriptInterface
+        public void fullscreen(final boolean off) {
+
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    if (!off) {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    } else {
+                        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    }
+                }
+
+            });
+
         }
 
     }
