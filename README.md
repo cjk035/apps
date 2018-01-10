@@ -33,7 +33,6 @@ const apps = {
 
 	dispatchEvent: function(event) {
 		if (!this.fn[event.type]) return;
-		console.log(22222);
 		var listener = this.fn[event.type];
 		for (var i = 0; i < listener.length; i++) {
 			if (typeof listener[i] == "function") listener[i].call(this, event);
