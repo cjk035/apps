@@ -25,9 +25,8 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
+
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView titleView;
     public TextView beforeButton;
     public TextView afterButton;
+    public View splView;
     public RelativeLayout rightView;
     public RelativeLayout navigatorView;
     public Vibrator vibrator;
@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
 
-        titleView = (TextView) findViewById(R.id.navigatorTitle);
-        navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
-        rightView = (RelativeLayout) findViewById(R.id.rightSide);
-        rightView.bringToFront();
-
         window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
                 .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -62,12 +57,17 @@ public class MainActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.parseColor("#FFFFFF"));
 
 
+        splView = (View) findViewById(R.id.spl);
+        titleView = (TextView) findViewById(R.id.navigatorTitle);
+        navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
+        rightView = (RelativeLayout) findViewById(R.id.rightSide);
+        rightView.bringToFront();
+
         beforeButton = (TextView) findViewById(R.id.beforeButton);
         afterButton = (TextView) findViewById(R.id.afterButton);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "statics/font/apps.ttf");
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
-
 
         beforeButton.setLongClickable(true);
         beforeButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -166,6 +166,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public int dip2px(int dip) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (scale * dip + 0.5f);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
@@ -208,11 +213,12 @@ public class MainActivity extends AppCompatActivity {
                     navigatorView.setBackgroundColor(Color.parseColor(color));
 
                     GradientDrawable gd = new GradientDrawable();
-                    gd.setColor(Color.parseColor("#aaaaaaaa"));
+                    gd.setColor(Color.parseColor("#aaa5a5a5"));
                     gd.setCornerRadius(rightView.getHeight());
                     gd.setStroke(1, Color.parseColor("white"));
                     rightView.setBackground(gd);
 
+                    splView.setBackgroundColor(Color.parseColor("white"));
                     beforeButton.setTextColor(Color.parseColor("white"));
                     afterButton.setTextColor(Color.parseColor("white"));
                     titleView.setTextColor(Color.parseColor("white"));
@@ -245,9 +251,29 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (!off) {
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                                (rightView.getWidth(), rightView.getHeight());
+                        params.setMargins(0, dip2px(10), dip2px(10), 0);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                        rightView.setLayoutParams(params);
                         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         navigatorView.setVisibility(View.VISIBLE);
                     } else {
+                        GradientDrawable gd = new GradientDrawable();
+                        gd.setColor(Color.parseColor("#aaa5a5a5"));
+                        gd.setCornerRadius(rightView.getHeight());
+                        gd.setStroke(1, Color.parseColor("white"));
+                        rightView.setBackground(gd);
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                                (rightView.getWidth(), rightView.getHeight());
+                        params.setMargins(0, dip2px(16), dip2px(10), 0);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                        rightView.setLayoutParams(params);
+
+                        beforeButton.setTextColor(Color.parseColor("white"));
+                        afterButton.setTextColor(Color.parseColor("white"));
+                        splView.setBackgroundColor(Color.parseColor("white"));
+
                         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         navigatorView.setVisibility(View.GONE);
