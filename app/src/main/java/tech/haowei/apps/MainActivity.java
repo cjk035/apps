@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Service;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -24,6 +25,10 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -91,26 +96,28 @@ public class MainActivity extends AppCompatActivity {
         webView.addJavascriptInterface(new JavaScript(), "apps");
 
         try {
-            Properties pro = new Properties();
-            pro.load(getApplicationContext().openFileInput("config.properties"));
-            String url = pro.getProperty("homeurl");
-            if (url != null) {
-                if (!url.startsWith("http:")) {
-                     new AlertDialog.Builder(this)
-                             .setTitle("错误")
-                             .setMessage("你给了一个错误的URL")
-                             .setCancelable(false)
-                             .setPositiveButton("确定", null)
-                             .create().
-                             show();
-                } else {
-                    webView.loadUrl(url);
-                }
-            }
 
-        }catch (Exception e) {
+            Properties pro = new Properties();
+            FileInputStream fis = getApplicationContext().openFileInput
+                    ("config.properties");
+            pro.load(fis);
+            String url = pro.getProperty("homeurl");
+            Log.e("LOAD.ATTR.URL", url);
+            if (url != null) {
+                webView.loadUrl(url);
+            } else {
+                new AlertDialog.Builder(this)
+                    .setTitle("错误")
+                    .setMessage("你给了一个错误的URL")
+                    .setCancelable(false)
+                    .setPositiveButton("确定", null)
+                    .create().
+                    show();
+            }
+            fis.close();
+        } catch (Exception e) {
             webView.loadUrl("https://haowei.asia");
-            e.printStackTrace();
+            Log.e("LOAD.ATTRIBUTES", e.getMessage());
         }
 
         webView.setWebViewClient(new WebViewClient() {
@@ -192,7 +199,8 @@ public class MainActivity extends AppCompatActivity {
                     if (color.equals("black")) {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                     } else {
-                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        window.getDecorView().setSystemUiVisibility(View
+                                .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                     }
 
                     window.setStatusBarColor(Color.parseColor(color));
@@ -250,21 +258,30 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void sethome(String url) {
 
-            try {
-                Properties pro = new Properties();
-                pro.load(getApplicationContext().openFileInput("config.properties"));
-                pro.put("homeurl", url);
-                pro.store(getApplicationContext().openFileOutput("config.properties", getApplicationContext().MODE_APPEND), "");
-            }catch (Exception e) {
-                Log.e("SETHOME.URL", e.getMessage());
-            }
-
-            runOnUiThread(new Runnable() {
+            Runnable run = new Runnable() {
                 @Override
                 public void run() {
-                    webView.loadUrl("javascript:alert('设置成功')");
+                    webView.loadUrl("javascript:alert('设置成功');");
                 }
-            });
+            };
+
+            try {
+                Properties pro = new Properties();
+                pro.setProperty("homeurl", url);
+                FileOutputStream fos = getApplicationContext().openFileOutput(
+                        "config.properties", Context.MODE_PRIVATE);
+                pro.store(fos, "");
+            } catch (Exception e) {
+                Log.e("SETHOME", e.getMessage());
+                run = new Runnable() {
+                    @Override
+                    public void run() {
+                        webView.loadUrl("javascript:alert('设置失败');");
+                    }
+                };
+            }
+
+            runOnUiThread(run);
 
         }
 
