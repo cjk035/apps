@@ -18,14 +18,25 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 这是一个`开源项目`，你可以做非商业用途，你可以参与编写，你也可以捐助此项目。
 
 
-### 关于作者
-
 ```javascript
 
-  var name = "我是好为";
-  apps.addEventListener('ready', function() {
-    apps.setNavigatorTitle('我的小程序');
-  });
+  const apps = {
+
+    fn: {},
+
+    addEventListener: function(type, fn) {
+        if (!this.fn[type]) this.fn[type] = fn;
+    },
+
+    dispatchEvent: function(event) {
+        if (!this.fn[event.type]) return ;
+        var listener = this.fn[event.type];
+        for (var i = 0; i < listener.length; i++) {
+            if (this.fn[event.type]) this.fn[event.type].call(this, event);
+        }
+    }
+
+  };
   
   
 ```
