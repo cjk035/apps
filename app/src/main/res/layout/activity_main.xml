@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/navigatorBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/navigatorTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/rightSide"
+            android:layout_width="97dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/right_side">
+
+            <TextView
+                android:id="@+id/beforeButton"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/spl"
+                android:background="@drawable/right_side_active"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="&#xe606;"
+                android:textColor="#333333"
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/spl"
+                android:layout_width="1px"
+                android:layout_height="14dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="#cccccc" />
+
+            <TextView
+                android:id="@+id/afterButton"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/spl"
+                android:background="@drawable/right_side_right_active"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="&#xe608;"
+                android:textColor="#333333"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/navigatorBar" />
+
+
+</RelativeLayout>
