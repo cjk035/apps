@@ -3,7 +3,7 @@ Android Apps 是什么?
 H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，开发者可以做出流畅的H5 APP，实现即用即开，无需要额外安装
 
 
-## 测试JS API
+### 测试JS API
 * apps.setNavigatorTitle(); // 设置状态栏标题
 * apps.setNavigatorBarColor(); // 设置状态栏颜色
 * apps.load(); // 加载 URL
@@ -14,11 +14,11 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 
 * 邮箱 boss#haowei.me
 
-## 捐助开发者
+### 捐助开发者
 这是一个`开源项目`，你可以做非商业用途，你也可以参编写，你也可以捐助此项目。
 
 
-## 关于作者
+### 关于作者
 
 ```javascript
 
