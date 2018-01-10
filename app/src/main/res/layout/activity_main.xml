@@ -20,52 +20,52 @@
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <RelativeLayout
-            android:id="@+id/rightSide"
-            android:layout_width="97dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightSide"
+        android:layout_width="97dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/right_side">
+
+        <TextView
+            android:id="@+id/beforeButton"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/spl"
+            android:background="@drawable/right_side_active"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="&#xe606;"
+            android:textColor="#333333"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/spl"
+            android:layout_width="1px"
+            android:layout_height="14dp"
+            android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/right_side">
+            android:background="#cccccc" />
 
-            <TextView
-                android:id="@+id/beforeButton"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_toStartOf="@+id/spl"
-                android:background="@drawable/right_side_active"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="&#xe606;"
-                android:textColor="#333333"
-                android:textSize="20sp" />
-
-            <View
-                android:id="@+id/spl"
-                android:layout_width="1px"
-                android:layout_height="14dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:background="#cccccc" />
-
-            <TextView
-                android:id="@+id/afterButton"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/spl"
-                android:background="@drawable/right_side_right_active"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="&#xe608;"
-                android:textColor="#333333"
-                android:textSize="20sp" />
-
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/afterButton"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/spl"
+            android:background="@drawable/right_side_right_active"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="&#xe608;"
+            android:textColor="#333333"
+            android:textSize="20sp" />
 
     </RelativeLayout>
+
 
     <WebView
         android:id="@+id/webView"

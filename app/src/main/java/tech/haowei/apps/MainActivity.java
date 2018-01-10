@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         titleView = (TextView) findViewById(R.id.navigatorTitle);
         navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
         rightView = (RelativeLayout) findViewById(R.id.rightSide);
+        rightView.bringToFront();
 
         window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
@@ -245,9 +246,11 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     if (!off) {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        navigatorView.setVisibility(View.VISIBLE);
                     } else {
                         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        navigatorView.setVisibility(View.GONE);
                     }
                 }
 
