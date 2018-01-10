@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onLongClick(View v) {
-                webView.reload();
                 try {
+                    webView.clearCache(true);
+                    webView.reload();
                     vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
                     vibrator.vibrate(new long[]{100, 200}, -1);
                 } catch (Exception e) {
