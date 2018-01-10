@@ -2,7 +2,9 @@ package tech.haowei.apps;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.Service;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -22,6 +24,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
@@ -85,7 +90,29 @@ public class MainActivity extends AppCompatActivity {
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setDefaultTextEncodingName("UTF -8");
         webView.addJavascriptInterface(new JavaScript(), "apps");
-        webView.loadUrl("https://haowei.asia");
+
+        try {
+            Properties pro = new Properties();
+            pro.load(getApplicationContext().openFileInput("config.properties"));
+            String url = pro.getProperty("homeurl");
+            if (url != null) {
+                if (!url.startsWith("http:")) {
+                     new AlertDialog.Builder(this)
+                             .setTitle("错误")
+                             .setMessage("你给了一个错误的URL")
+                             .setCancelable(false)
+                             .setPositiveButton("确定", null)
+                             .create().
+                             show();
+                } else {
+                    webView.loadUrl(url);
+                }
+            }
+
+        }catch (Exception e) {
+            webView.loadUrl("https://haowei.asia");
+            e.printStackTrace();
+        }
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -218,6 +245,27 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+            });
+
+        }
+
+        @JavascriptInterface
+        public void sethome(String url) {
+
+            try {
+                Properties pro = new Properties();
+                pro.load(getApplicationContext().openFileInput("config.properties"));
+                pro.put("homeurl", url);
+                pro.store(getApplicationContext().openFileOutput("config.properties", getApplicationContext().MODE_APPEND), "");
+            }catch (Exception e) {
+                Log.e("SETHOME.URL", e.getMessage());
+            }
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    webView.loadUrl("javascript:alert('设置成功')");
+                }
             });
 
         }
