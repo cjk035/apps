@@ -9,6 +9,8 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 * apps.load(); // 加载 URL
 * apps.vibrate(); // 震动
 * apps.fullscreen( [ boolean off = false ] ); // 全屏
+* apps.startWifi(); // 开启wifi
+* apps.stopWifi(); // 关闭wifi
 * apps.sethome( string url ) // 设置首页 【仅调试模式使用，非生产环境接口】
 
 ### 有问题反馈

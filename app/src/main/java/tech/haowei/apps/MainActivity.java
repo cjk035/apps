@@ -319,15 +319,19 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void startWifi() {
-            if (wifi != null && wifi.isWifiEnabled()) {
+            try {
                 wifi.setWifiEnabled(true);
+            }catch (Exception e) {
+                Log.e("WIFI.START", e.getMessage());
             }
         }
 
         @JavascriptInterface
         public void stopWifi() {
-            if (wifi != null && wifi.isWifiEnabled()) {
+            try {
                 wifi.setWifiEnabled(false);
+            }catch (Exception e) {
+                Log.e("WIFI.STOP", e.getMessage());
             }
         }
 
