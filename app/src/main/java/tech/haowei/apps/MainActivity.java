@@ -273,8 +273,20 @@ public class MainActivity extends AppCompatActivity {
                         params.setMargins(0, dip2px(10), dip2px(10), 0);
                         params.addRule(RelativeLayout.ALIGN_PARENT_END);
                         rightView.setLayoutParams(params);
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         navigatorView.setVisibility(View.VISIBLE);
+
+                        int flag = window.getAttributes().flags;
+                        if ((flag & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                                == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+                            if (window.getStatusBarColor() != Color.parseColor("black")) {
+                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                            } else {
+                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                            }
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        }
+
+
                     } else {
                         GradientDrawable gd = new GradientDrawable();
                         gd.setColor(Color.parseColor("#aaa5a5a5"));
@@ -290,10 +302,10 @@ public class MainActivity extends AppCompatActivity {
                         beforeButton.setTextColor(Color.parseColor("white"));
                         afterButton.setTextColor(Color.parseColor("white"));
                         splView.setBackgroundColor(Color.parseColor("white"));
-
-                        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                                WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         navigatorView.setVisibility(View.GONE);
+
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
+                        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     }
                 }
 
