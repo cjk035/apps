@@ -224,7 +224,11 @@ public class MainActivity extends AppCompatActivity {
                     splView.setBackgroundColor(Color.parseColor("white"));
                     beforeButton.setTextColor(Color.parseColor("white"));
                     afterButton.setTextColor(Color.parseColor("white"));
-                    titleView.setTextColor(Color.parseColor("white"));
+                    if (!color.equals("white")) {
+                        titleView.setTextColor(Color.parseColor("white"));
+                    } else {
+                        titleView.setTextColor(Color.parseColor("black"));
+                    }
                 }
             });
         }
@@ -329,10 +333,22 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void stopWifi() {
             try {
-                wifi.setWifiEnabled(false);
+                if (wifi.isWifiEnabled()) wifi.setWifiEnabled(false);
             }catch (Exception e) {
                 Log.e("WIFI.STOP", e.getMessage());
             }
+        }
+
+        @JavascriptInterface
+        public void getWifiList() {
+            /*try {
+                if (wifi.isWifiEnabled()) {
+                    wifi.getScanResults();
+
+                }
+            }catch (Exception e) {
+                Log.e("WIFI.LIST", e.getMessage());
+            }*/
         }
 
     }
