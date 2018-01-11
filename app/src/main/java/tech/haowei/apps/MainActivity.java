@@ -25,6 +25,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.FileInputStream;
@@ -349,6 +350,19 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e) {
                 Log.e("WIFI.LIST", e.getMessage());
             }*/
+        }
+
+        @JavascriptInterface
+        public void showToast(final String text) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+
         }
 
     }
