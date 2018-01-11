@@ -6,7 +6,7 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 ### 测试JS API
 * apps.setNavigatorTitle(); // 设置状态栏标题
 * apps.setNavigatorBarColor(); // 设置状态栏颜色
-* apps.load(); // 加载 URL
+* apps.open(string url); // 打开新页面
 * apps.vibrate(); // 震动
 * apps.fullscreen( [ boolean off = false ] ); // 全屏
 * apps.startWifi(); // 开启wifi

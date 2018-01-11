@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -100,30 +101,41 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setDefaultTextEncodingName("UTF -8");
         webView.addJavascriptInterface(new JavaScript(), "apps");
 
-        try {
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+        if ( url != null) {
+            Log.e("INTENT", url);
+            webView.loadUrl(url);
+        } else {
 
-            Properties pro = new Properties();
-            FileInputStream fis = getApplicationContext().openFileInput
-                    ("config.properties");
-            pro.load(fis);
-            String url = pro.getProperty("homeurl");
-            Log.e("LOAD.ATTR.URL", url);
-            if (url != null) {
-                webView.loadUrl(url);
-            } else {
-                new AlertDialog.Builder(this)
-                    .setTitle("错误")
-                    .setMessage("你给了一个错误的URL")
-                    .setCancelable(false)
-                    .setPositiveButton("确定", null)
-                    .create().
-                    show();
+            try {
+
+                Properties pro = new Properties();
+                FileInputStream fis = getApplicationContext().openFileInput
+                        ("config.properties");
+                pro.load(fis);
+                url = pro.getProperty("homeurl");
+                Log.e("LOAD.ATTR.URL", url);
+                if (url != null) {
+                    webView.loadUrl(url);
+                } else {
+                    new AlertDialog.Builder(this)
+                            .setTitle("错误")
+                            .setMessage("你给了一个错误的URL")
+                            .setCancelable(false)
+                            .setPositiveButton("确定", null)
+                            .create().
+                            show();
+                }
+                fis.close();
+            } catch (Exception e) {
+                webView.loadUrl("https://haowei.asia");
+                Log.e("LOAD.ATTRIBUTES", e.getMessage());
             }
-            fis.close();
-        } catch (Exception e) {
-            webView.loadUrl("https://haowei.asia");
-            Log.e("LOAD.ATTRIBUTES", e.getMessage());
+
         }
+
+
 
         webView.setWebViewClient(new WebViewClient() {
 
@@ -242,13 +254,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void load(final String url) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    webView.loadUrl(url);
-                }
-            });
+        public void open(final String url) {
+            Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            intent.putExtra("url", url);
+            startActivity(intent);
         }
 
         @JavascriptInterface
