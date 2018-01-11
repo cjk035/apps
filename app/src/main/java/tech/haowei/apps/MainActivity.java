@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.net.wifi.WifiManager;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public RelativeLayout navigatorView;
     public Vibrator vibrator;
     public Window window;
+    public WifiManager wifi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
+        wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
@@ -312,6 +315,20 @@ public class MainActivity extends AppCompatActivity {
 
             runOnUiThread(run);
 
+        }
+
+        @JavascriptInterface
+        public void startWifi() {
+            if (wifi != null && wifi.isWifiEnabled()) {
+                wifi.setWifiEnabled(true);
+            }
+        }
+
+        @JavascriptInterface
+        public void stopWifi() {
+            if (wifi != null && wifi.isWifiEnabled()) {
+                wifi.setWifiEnabled(false);
+            }
         }
 
     }
