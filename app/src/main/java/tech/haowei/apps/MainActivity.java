@@ -282,13 +282,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void fullScreen(final boolean off) {
+        public void fullScreen(final boolean enable) {
 
             runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
-                    if (!off) {
+                    if (!enable) {
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                                 (rightView.getWidth(), rightView.getHeight());
                         params.setMargins(0, dip2px(10), dip2px(10), 0);

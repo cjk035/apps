@@ -9,7 +9,7 @@ apps.setNavigatorTitle(string text); // 设置状态栏标题
 apps.setNavigatorBarColor(string color); // 设置状态栏颜色
 apps.open(string url); // 打开新页面
 apps.vibrate(); // 震动
-apps.fullScreen( [ boolean off = false ] ); // 全屏
+apps.fullScreen( boolean enable ); // 全屏
 apps.startWifi(); // 开启wifi
 apps.stopWifi(); // 关闭wifi
 apps.showToast(string text); // 显示 tips 消息
