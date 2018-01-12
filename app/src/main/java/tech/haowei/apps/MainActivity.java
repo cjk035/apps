@@ -100,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
             titleView.setLayoutParams(params);
         }
 
+        firstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
+                dispatchKeyEvent(event);
+            }
+        });
 
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
