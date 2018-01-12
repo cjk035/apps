@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void fullscreen(final boolean off) {
+        public void fullScreen(final boolean off) {
 
             runOnUiThread(new Runnable() {
 
@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void sethome(String url) {
+        public void setHome(String url) {
 
             Runnable run = new Runnable() {
                 @Override
