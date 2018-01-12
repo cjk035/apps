@@ -13,6 +13,7 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 * apps.stopWifi(); // 关闭wifi
 * apps.showToast(); // 显示 tips 消息
 * apps.sethome( string url ) // 设置首页 【仅调试模式使用，非生产环境接口】
+* apps.navigatorBackEnable(); // 开启、关闭后退按钮
 
 ### 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
