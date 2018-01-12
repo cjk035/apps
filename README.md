@@ -4,16 +4,16 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 
 
 ### 测试JS API
-* apps.setNavigatorTitle(); // 设置状态栏标题
-* apps.setNavigatorBarColor(); // 设置状态栏颜色
+* apps.setNavigatorTitle(string text); // 设置状态栏标题
+* apps.setNavigatorBarColor(string color); // 设置状态栏颜色
 * apps.open(string url); // 打开新页面
 * apps.vibrate(); // 震动
 * apps.fullscreen( [ boolean off = false ] ); // 全屏
 * apps.startWifi(); // 开启wifi
 * apps.stopWifi(); // 关闭wifi
-* apps.showToast(); // 显示 tips 消息
+* apps.showToast(string text); // 显示 tips 消息
 * apps.sethome( string url ) // 设置首页 【仅调试模式使用，非生产环境接口】
-* apps.navigatorBackEnable(); // 开启、关闭后退按钮
+* apps.navigatorBackEnable(boolean off); // 开启、关闭后退按钮
 
 ### 有问题反馈
 在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流

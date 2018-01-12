@@ -403,12 +403,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void navigatorBackEnable(final boolean off ) {
+        public void navigatorBackEnable(final boolean enable ) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-                    if (off) {
+                    if (enable) {
                         params.setMarginStart(0);
                         params.addRule(RelativeLayout.END_OF, R.id.firstButton);
                         titleView.setLayoutParams(params);
