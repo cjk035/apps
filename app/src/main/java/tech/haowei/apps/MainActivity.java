@@ -1,16 +1,21 @@
 package tech.haowei.apps;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.IBinder;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +36,7 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
-        if ( url != null) {
+        if (url != null) {
             Log.e("INTENT", url);
             webView.loadUrl(url);
         } else {
@@ -150,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -363,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
         public void startWifi() {
             try {
                 wifi.setWifiEnabled(true);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.e("WIFI.START", e.getMessage());
             }
         }
@@ -372,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         public void stopWifi() {
             try {
                 if (wifi.isWifiEnabled()) wifi.setWifiEnabled(false);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.e("WIFI.STOP", e.getMessage());
             }
         }
@@ -403,7 +408,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void navigatorBackEnable(final boolean enable ) {
+        public void navigatorBackEnable(final boolean enable) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -421,6 +426,27 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+        }
+
+        @JavascriptInterface
+        public void phoneCall(String mobile, boolean action) {
+
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_DEFAULT, Uri.parse("tel:" + mobile));
+                startActivity(intent);
+            } else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("错误")
+                                .setMessage("您无权调用打电话接口")
+                                .create()
+                                .show();
+                    }
+                });
+            }
+
         }
 
     }
