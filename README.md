@@ -3,6 +3,7 @@ Android Apps 是什么?
 H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，开发者可以做出流畅的H5 APP，实现即用即开，无需要额外安装
 
 ![演示界面](https://github.com/haowei4032/apps/raw/master/preview/1797827030.jpg)
+![演示界面](https://github.com/haowei4032/apps/raw/master/preview/728371208.jpg)
 
 ### 测试JS API
 ```javascript
