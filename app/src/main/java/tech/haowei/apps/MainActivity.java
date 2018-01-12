@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     public WebView webView;
     public TextView titleView;
+    public TextView firstButton;
     public TextView beforeButton;
     public TextView afterButton;
     public View splView;
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
         rightView = (RelativeLayout) findViewById(R.id.rightSide);
         rightView.bringToFront();
 
+        firstButton = (TextView) findViewById(R.id.firstButton);
         beforeButton = (TextView) findViewById(R.id.beforeButton);
         afterButton = (TextView) findViewById(R.id.afterButton);
         Typeface iconfont = Typeface.createFromAsset(getAssets(), "statics/font/apps.ttf");
+        firstButton.setTypeface(iconfont);
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
 
@@ -90,6 +93,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        if (firstButton.getVisibility() == View.GONE) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            params.setMarginStart(dip2px(15));
+            titleView.setLayoutParams(params);
+        }
 
 
         webView = (WebView) findViewById(R.id.webView);
@@ -384,6 +393,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+        }
+
+        @JavascriptInterface
+        public void navigatorBackEnable(final boolean off ) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                    if (off) {
+                        params.setMarginStart(0);
+                        params.addRule(RelativeLayout.END_OF, R.id.firstButton);
+                        titleView.setLayoutParams(params);
+                        firstButton.setVisibility(View.VISIBLE);
+                    } else {
+                        params.setMarginStart(dip2px(15));
+                        titleView.setLayoutParams(params);
+                        firstButton.setVisibility(View.GONE);
+                    }
+
+                }
+            });
         }
 
     }
