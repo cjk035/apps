@@ -21,6 +21,7 @@ apps.navigatorBackEnable(boolean enable); // 开启、关闭后退按钮
 apps.phoneCall(string number, boolean action); //打电话
 apps.setCopyText(string text); //写入剪贴板
 apps.getCopyText(); //读取剪贴板
+apps.geoLocation(); //返回定位信息
 
 ```
 
