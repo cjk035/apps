@@ -26,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -492,9 +493,18 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void setCopyText(String text) {
 
-            ClipData mClipData = ClipData.newPlainText("text", text);
-            cm.setPrimaryClip(mClipData);
-            
+            try {
+                ClipData mClipData = ClipData.newPlainText("text", text);
+                cm.setPrimaryClip(mClipData);
+            }catch (Exception e) {
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       webView.loadUrl("javascript:alert('剪贴板写入失败')");
+                   }
+               });
+            }
+
         }
 
         @JavascriptInterface
