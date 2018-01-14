@@ -13,6 +13,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Vibrator;
@@ -35,6 +38,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -279,16 +284,16 @@ public class MainActivity extends AppCompatActivity {
                     window.setStatusBarColor(Color.parseColor(color));
                     navigatorView.setBackgroundColor(Color.parseColor(color));
 
-                    GradientDrawable gd = new GradientDrawable();
-                    gd.setColor(Color.parseColor("#aaa5a5a5"));
-                    gd.setCornerRadius(rightView.getHeight());
-                    gd.setStroke(1, Color.parseColor("white"));
-                    rightView.setBackground(gd);
-
-                    splView.setBackgroundColor(Color.parseColor("white"));
-                    beforeButton.setTextColor(Color.parseColor("white"));
-                    afterButton.setTextColor(Color.parseColor("white"));
                     if (!color.equals("white")) {
+                        GradientDrawable gd = new GradientDrawable();
+                        gd.setColor(Color.parseColor("#aaa5a5a5"));
+                        gd.setCornerRadius(rightView.getHeight());
+                        gd.setStroke(1, Color.parseColor("white"));
+                        rightView.setBackground(gd);
+
+                        splView.setBackgroundColor(Color.parseColor("white"));
+                        beforeButton.setTextColor(Color.parseColor("white"));
+                        afterButton.setTextColor(Color.parseColor("white"));
                         titleView.setTextColor(Color.parseColor("white"));
                     } else {
                         titleView.setTextColor(Color.parseColor("black"));
@@ -468,19 +473,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void setCopyText(String text) {
+        public boolean setCopyText(String text) {
 
             try {
                 ClipData mClipData = ClipData.newPlainText("text", text);
                 cm.setPrimaryClip(mClipData);
-            }catch (Exception e) {
-               runOnUiThread(new Runnable() {
-                   @Override
-                   public void run() {
-                       webView.loadUrl("javascript:alert('剪贴板写入失败')");
-                   }
-               });
+            } catch (Exception e) {
+                Log.e("PASTE", e.getMessage());
+                return false;
             }
+
+            return true;
 
         }
 
@@ -489,6 +492,45 @@ public class MainActivity extends AppCompatActivity {
             ClipData abc = cm.getPrimaryClip();
             ClipData.Item item = abc.getItemAt(0);
             return item.getText().toString();
+        }
+
+        @JavascriptInterface
+        public String geoLocation() {
+
+            JSONObject data = new JSONObject();
+
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_FINE);
+                criteria.setAltitudeRequired(false);
+                criteria.setBearingRequired(false);
+                criteria.setCostAllowed(true);
+                criteria.setPowerRequirement(Criteria.POWER_LOW);
+                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
+
+
+                if (location != null) {
+
+                    try {
+                        data.put("latitude", location.getLatitude());
+                        data.put("longitude", location.getLatitude());
+                        data.put("speed", location.getSpeed());
+                        data.put("accuracy", location.getAccuracy());
+                        data.put("altitude", location.getAltitude());
+                    } catch (Exception e) {
+                        Log.e("GEOLOCATION", e.getMessage());
+                    }
+
+                    return data.toString();
+                }
+
+
+            }
+
+            return data.toString();
+
         }
 
     }
