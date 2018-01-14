@@ -120,11 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-
-
-
-
-
         if (firstButton.getVisibility() == View.GONE) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
             params.setMarginStart(dip2px(15));
@@ -134,8 +129,7 @@ public class MainActivity extends AppCompatActivity {
         firstButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                KeyEvent event = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK);
-                dispatchKeyEvent(event);
+                onBackPressed();
             }
         });
 
@@ -248,14 +242,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.e("KEYEVENT", "EVENT.WHICH: " + keyCode);
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            Log.e("KEYEVENT.BACK", "GO BACK HISTORY");
-            webView.goBack();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
+    public void onBackPressed() {
+        if (webView.canGoBack()) webView.goBack();
+        super.onBackPressed();
     }
 
     public class JavaScript {
