@@ -23,8 +23,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
@@ -34,6 +36,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +50,7 @@ import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
 
+    public String appTitle = "小程序";
     public WebView webView;
     public TextView titleView;
     public TextView firstButton;
@@ -98,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
 
+
+        if (firstButton.getVisibility() == View.GONE) {
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            params.setMarginStart(dip2px(15));
+            titleView.setLayoutParams(params);
+        }
+
+
         afterButton.setLongClickable(true);
         afterButton.setOnClickListener(new View.OnClickListener() {
 
@@ -125,11 +137,53 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        if (firstButton.getVisibility() == View.GONE) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            params.setMarginStart(dip2px(15));
-            titleView.setLayoutParams(params);
-        }
+        beforeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        LinearLayout view = new LinearLayout(MainActivity.this);
+                        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                        view.setOrientation(LinearLayout.VERTICAL);
+                        TextView text = new TextView(MainActivity.this);
+                        text.setText("分享");
+                        text.setTextColor(Color.parseColor("black"));
+                        text.setTextSize(16);
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setGravity(Gravity.CENTER);
+                        view.addView(text);
+
+                        text = new TextView(MainActivity.this);
+                        text.setText("添加到桌面");
+                        text.setTextColor(Color.parseColor("black"));
+                        text.setTextSize(16);
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setGravity(Gravity.CENTER);
+                        view.addView(text);
+
+                        text = new TextView(MainActivity.this);
+                        text.setText("关于".concat(appTitle));
+                        text.setTextColor(Color.parseColor("black"));
+                        text.setTextSize(16);
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setGravity(Gravity.CENTER);
+                        view.addView(text);
+
+
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setView(view)
+                                .create().show();
+                    }
+
+                });
+            }
+
+        });
+
 
         firstButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +313,7 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    appTitle = text;
                     titleView.setText(text);
                 }
             });
