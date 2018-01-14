@@ -19,6 +19,8 @@ apps.showToast(string text); // 显示 tips 消息
 apps.setHome( string url ) // 设置首页 【仅调试模式使用，非生产环境接口】
 apps.navigatorBackEnable(boolean enable); // 开启、关闭后退按钮
 apps.phoneCall(string number, boolean action); //打电话
+apps.setCopyText(string text); //写入剪贴板
+apps.getCopyText(); //读取剪贴板
 
 ```
 
