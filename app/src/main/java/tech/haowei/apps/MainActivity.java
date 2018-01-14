@@ -158,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
                         view.addView(text);
 
                         text = new TextView(MainActivity.this);
+                        text.setText("投诉");
+                        text.setTextColor(Color.parseColor("black"));
+                        text.setTextSize(16);
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setGravity(Gravity.CENTER);
+                        view.addView(text);
+
+                        text = new TextView(MainActivity.this);
                         text.setText("添加到桌面");
                         text.setTextColor(Color.parseColor("black"));
                         text.setTextSize(16);
