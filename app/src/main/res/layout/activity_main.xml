@@ -86,5 +86,36 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/navigatorBar" />
 
+    <RelativeLayout
+        android:id="@+id/loadView"
+        android:layout_alignParentStart="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:animateLayoutChanges="true">
+
+        <TextView
+            android:id="@+id/loadAppsIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="209dp"
+            android:text="&#xe60e;"
+            android:textColor="#3BAF34"
+            android:textSize="64sp" />
+
+        <TextView
+            android:id="@+id/loadAppsName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loadAppsIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="小程序"
+            android:textSize="16sp"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

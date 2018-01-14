@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Service;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,7 +15,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,6 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,20 +46,25 @@ public class MainActivity extends AppCompatActivity {
     public TextView firstButton;
     public TextView beforeButton;
     public TextView afterButton;
+    public TextView loadAppsIcon;
+    public RelativeLayout loadView;
     public View splView;
     public RelativeLayout rightView;
     public RelativeLayout navigatorView;
     public Vibrator vibrator;
     public Window window;
     public WifiManager wifi;
+    public ClipboardManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Typeface iconfont = Typeface.createFromAsset(getAssets(), "statics/font/apps.ttf");
         vibrator = (Vibrator) getApplication().getSystemService(Service.VIBRATOR_SERVICE);
         wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         window = getWindow();
         window.getDecorView().setSystemUiVisibility(View
@@ -73,15 +78,29 @@ public class MainActivity extends AppCompatActivity {
         titleView = (TextView) findViewById(R.id.navigatorTitle);
         navigatorView = (RelativeLayout) findViewById(R.id.navigatorBar);
         rightView = (RelativeLayout) findViewById(R.id.rightSide);
+        loadAppsIcon = (TextView) findViewById(R.id.loadAppsIcon);
+        titleView = (TextView) findViewById(R.id.navigatorTitle);
+        loadView = (RelativeLayout) findViewById(R.id.loadView);
         rightView.bringToFront();
 
         firstButton = (TextView) findViewById(R.id.firstButton);
         beforeButton = (TextView) findViewById(R.id.beforeButton);
         afterButton = (TextView) findViewById(R.id.afterButton);
-        Typeface iconfont = Typeface.createFromAsset(getAssets(), "statics/font/apps.ttf");
+
+        loadAppsIcon.setTypeface(iconfont);
         firstButton.setTypeface(iconfont);
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
+
+        afterButton.setLongClickable(true);
+        afterButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+
+        });
 
         beforeButton.setLongClickable(true);
         beforeButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -99,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
+
+
+
 
         if (firstButton.getVisibility() == View.GONE) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -175,11 +199,25 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        loadView.setVisibility(View.GONE);
+                    }
+
+                });
+
+            }
+
         });
 
         webView.setWebChromeClient(new WebChromeClient() {
 
-            private boolean done = false;
+            /*private boolean done = false;
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -190,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("LOCAL.SERVICE", "JavaScript Service Bridge Successful");
                     webView.loadUrl("javascript:window.dispatchEvent(new Event('ready'))");
                 }
-            }
+            }*/
 
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
@@ -210,7 +248,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.e("KEYEVENT", "EVENT.WHICH: " + keyCode);
         if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
+            Log.e("KEYEVENT.BACK", "GO BACK HISTORY");
             webView.goBack();
             return true;
         }
@@ -447,6 +487,21 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
 
+        }
+
+        @JavascriptInterface
+        public void setCopyText(String text) {
+
+            ClipData mClipData = ClipData.newPlainText("text", text);
+            cm.setPrimaryClip(mClipData);
+            
+        }
+
+        @JavascriptInterface
+        public String getCopyText() {
+            ClipData abc = cm.getPrimaryClip();
+            ClipData.Item item = abc.getItemAt(0);
+            return item.getText().toString();
         }
 
     }
