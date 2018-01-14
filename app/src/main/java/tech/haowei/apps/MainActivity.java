@@ -424,18 +424,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void getWifiList() {
-            /*try {
-                if (wifi.isWifiEnabled()) {
-                    wifi.getScanResults();
-
-                }
-            }catch (Exception e) {
-                Log.e("WIFI.LIST", e.getMessage());
-            }*/
-        }
-
-        @JavascriptInterface
         public void showToast(final String text) {
 
             runOnUiThread(new Runnable() {
