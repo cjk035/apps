@@ -41,14 +41,17 @@ public class AAService extends Service {
 
             @Override
             public void run() {
+
+                Intent intent = new Intent("tech.haowei.apps.broadcast");
+
                 try {
+
                     socket = new Socket("118.193.158.249", 9500);
                     DataInputStream dis = new DataInputStream(socket.getInputStream());
                     DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
                     dos.write("ELHO".getBytes());
                     dos.flush();
 
-                    Intent intent;
                     byte[] b = new byte[1024];
                     StringBuilder raw = new StringBuilder();
 
@@ -57,15 +60,15 @@ public class AAService extends Service {
                         raw.append(new String(b).trim());
                         if (raw.length() > 0) {
                             Log.e("AASERVICE", "readLine");
-                            intent = new Intent("tech.haowei.apps.broadcast");
                             intent.putExtra("text", raw.toString());
                             sendBroadcast(intent);
                         }
                     }
 
                 } catch (IOException e) {
-                    isConected = false;
                     Log.e("AASERVICE", e.getMessage());
+                    intent.putExtra("text", "服务连接失败");
+                    sendBroadcast(intent);
                 }
             }
 
