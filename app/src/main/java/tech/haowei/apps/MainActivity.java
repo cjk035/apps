@@ -621,7 +621,7 @@ public class MainActivity extends AppCompatActivity {
 
                     try {
                         data.put("latitude", location.getLatitude());
-                        data.put("longitude", location.getLatitude());
+                        data.put("longitude", location.getLongitude());
                         data.put("speed", location.getSpeed());
                         data.put("accuracy", location.getAccuracy());
                         data.put("altitude", location.getAltitude());
