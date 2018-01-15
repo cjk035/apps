@@ -22,7 +22,7 @@ apps.phoneCall(string number, boolean action); //打电话
 apps.setCopyText(string text); //写入剪贴板
 apps.getCopyText(); //读取剪贴板
 apps.geoLocation(); //返回定位信息
-
+apps.getWifiList(); //获取wifi列表
 ```
 
 ### 有问题反馈
