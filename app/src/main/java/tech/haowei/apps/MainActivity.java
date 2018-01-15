@@ -18,6 +18,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +48,7 @@ import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.lang.ref.WeakReference;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -312,6 +315,42 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (webView.canGoBack()) webView.goBack();
         super.onBackPressed();
+    }
+
+    public void showBroadcast(final Object obj) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("广播消息")
+                        .setMessage(obj.toString())
+                        .create()
+                        .show();
+            }
+
+        });
+    }
+
+    public static class Tunnel extends Handler {
+
+        private final WeakReference<MainActivity> mActivity;
+
+        Tunnel(MainActivity activity) {
+            mActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case 1:
+                    mActivity.get().showBroadcast(msg.obj);
+                    break;
+            }
+
+        }
+
     }
 
     public class JavaScript {
