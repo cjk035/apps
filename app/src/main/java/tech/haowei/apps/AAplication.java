@@ -11,6 +11,6 @@ public class AAplication extends Application {
         super.onCreate();
         Intent intent = new Intent(this, AAService.class);
         startService(intent);
-        Log.e("AAPPLICATION", "initialize");
+        Log.e("AAPPLICATION", "welcome");
     }
 }

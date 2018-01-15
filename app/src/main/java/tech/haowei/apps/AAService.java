@@ -5,16 +5,10 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.nio.Buffer;
 
 public class AAService extends Service {
 
@@ -63,7 +57,7 @@ public class AAService extends Service {
                         raw.append(new String(b).trim());
                         if (raw.length() > 0) {
                             Log.e("AASERVICE", "readLine");
-                            intent = new Intent("com.android.action.broadcast");
+                            intent = new Intent("tech.haowei.apps.broadcast");
                             intent.putExtra("text", raw.toString());
                             sendBroadcast(intent);
                         }

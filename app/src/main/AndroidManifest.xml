@@ -32,7 +32,7 @@
         <service android:name=".AAService" />
         <receiver android:name=".AAReceiver">
             <intent-filter>
-                <action android:name="com.android.action.broadcast"/>
+                <action android:name="tech.haowei.apps.broadcast" />
             </intent-filter>
         </receiver>
     </application>
