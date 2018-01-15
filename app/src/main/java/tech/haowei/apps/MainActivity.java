@@ -17,6 +17,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
@@ -44,11 +46,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
@@ -633,6 +637,30 @@ public class MainActivity extends AppCompatActivity {
 
             return data.toString();
 
+        }
+
+        @JavascriptInterface
+        public String getWifiList() {
+
+            JSONArray data = new JSONArray();
+
+            if (wifi.isWifiEnabled()) {
+                JSONObject item;
+                try {
+                    WifiInfo info = wifi.getConnectionInfo();
+                    List<ScanResult> results = wifi.getScanResults();
+                    for (ScanResult next : results) {
+                        item = new JSONObject();
+                        item.put("SSID", next.SSID);
+                        item.put("level", next.level);
+                        data.put(item);
+                    }
+                } catch (Exception e) {
+                    Log.e("WIFI.LIST", e.getMessage());
+                }
+            }
+
+            return data.toString();
         }
 
     }
