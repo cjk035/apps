@@ -651,6 +651,7 @@ public class MainActivity extends AppCompatActivity {
                     List<ScanResult> results = wifi.getScanResults();
                     for (ScanResult next : results) {
                         item = new JSONObject();
+                        item.put("BSSID", next.BSSID);
                         item.put("SSID", next.SSID);
                         item.put("level", next.level);
                         data.put(item);
