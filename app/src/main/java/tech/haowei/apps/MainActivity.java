@@ -4,6 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -23,6 +26,7 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -139,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                return false;
+
+                return true;
             }
 
         });
@@ -334,27 +339,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-    }
-
-    public static class Tunnel extends Handler {
-
-        private final WeakReference<MainActivity> mActivity;
-
-        Tunnel(MainActivity activity) {
-            mActivity = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                case 1:
-                    mActivity.get().showBroadcast(msg.obj);
-                    break;
-            }
-
-        }
-
     }
 
     public class JavaScript {
@@ -662,6 +646,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return data.toString();
+        }
+
+        @JavascriptInterface
+        public void sendNotiticationText(String text) {
+
+            Intent intent = new Intent();
+            PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 1, intent, 0);
+            NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "")
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("测试")
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setFullScreenIntent(pi, true)
+                    .setContentText(text);
+
+            if (notifyManager != null) notifyManager.notify(1, builder.build());
+
         }
 
     }
