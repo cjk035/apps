@@ -62,12 +62,14 @@ public class AAService extends Service {
                         if (raw.length() > 0) {
                             Log.e("AASERVICE", "readLine");
                             intent.putExtra("text", raw.toString());
+                            intent.putExtra("id", errorConnection);
                             sendBroadcast(intent);
                         }
                     }
 
                 } catch (IOException e) {
                     Log.e("AASERVICE", e.getMessage());
+                    intent.putExtra("id", errorConnection);
                     intent.putExtra("text", "服务连接失败");
                     sendBroadcast(intent);
                     errorConnection++;

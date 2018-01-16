@@ -659,6 +659,7 @@ public class MainActivity extends AppCompatActivity {
                         .setSmallIcon(R.mipmap.ic_launcher_round)
                         .setContentTitle("测试")
                         .setDefaults(Notification.DEFAULT_ALL)
+                        .setAutoCancel(true)
                         .setFullScreenIntent(pi, true)
                         .setContentText(text);
 

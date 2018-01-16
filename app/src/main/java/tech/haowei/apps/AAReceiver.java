@@ -16,16 +16,18 @@ public class AAReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         try {
+            int id = intent.getIntExtra("id", 0);
             NotificationManager notifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            PendingIntent pi = PendingIntent.getActivity(context, 1, new Intent(context, MainActivity.class), 0);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(), 0);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "")
                     .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle("广播消息")
                     .setDefaults(Notification.DEFAULT_ALL)
+                    .setAutoCancel(true)
                     .setFullScreenIntent(pi, true)
                     .setContentText(intent.getStringExtra("text"));
 
-            notifyManager.notify(1, builder.build());
+            notifyManager.notify(id, builder.build());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("AARECEIVER", "notification error: " + e.getMessage());
