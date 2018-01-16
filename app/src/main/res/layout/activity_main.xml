@@ -121,7 +121,7 @@
             android:id="@+id/loadAppsAnimate"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/loadAppsName"
+            android:layout_centerHorizontal="true"
             android:layout_below="@+id/loadAppsName"
             android:layout_marginTop="10dp">
 
@@ -136,6 +136,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:background="@drawable/load_point"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"/>
 
             <View

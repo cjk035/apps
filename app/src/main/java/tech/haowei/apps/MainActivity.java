@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public Window window;
     public WifiManager wifi;
     public ClipboardManager cm;
+    public AnimatorSet aset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams
                 .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.parseColor("#FFFFFF"));
+        aset = new AnimatorSet();
 
 
         splView = (View) findViewById(R.id.spl);
@@ -218,14 +220,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(loadAppsIcon, "scaleX", 0.5f, 0.75f, 1, 0.5f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(loadAppsIcon, "scaleY", 0.5f, 0.75f, 1, 0.5f);
-        scaleX.setRepeatCount(ValueAnimator.INFINITE);
-        scaleY.setRepeatCount(ValueAnimator.INFINITE);
-        AnimatorSet set = new AnimatorSet();
-        set.play(scaleX).with(scaleY);
-        set.setDuration(1500);
-        set.start();
+
+        View animate_1 = (View) findViewById(R.id.animate_1);
+        View animate_2 = (View) findViewById(R.id.animate_2);
+        View animate_3 = (View) findViewById(R.id.animate_3);
+
+        /*ObjectAnimator scaleX1 = ObjectAnimator.ofFloat(animate_1, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleY1 = ObjectAnimator.ofFloat(animate_1, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleX1.setRepeatCount(ValueAnimator.INFINITE);
+        scaleY1.setRepeatCount(ValueAnimator.INFINITE);*/
+
+        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(animate_2, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(animate_2, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleX2.setRepeatCount(ValueAnimator.INFINITE);
+        scaleY2.setRepeatCount(ValueAnimator.INFINITE);
+
+        /*ObjectAnimator scaleX3 = ObjectAnimator.ofFloat(animate_3, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleY3 = ObjectAnimator.ofFloat(animate_3, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleX3.setRepeatCount(ValueAnimator.INFINITE);
+        scaleY3.setRepeatCount(ValueAnimator.INFINITE);*/
+
+        //aset.play(scaleX1).with(scaleY1);
+        aset.play(scaleX2).with(scaleX2);
+        //aset.play(scaleX3).with(scaleY3);
+        aset.setDuration(1000);
+        aset.start();
+
+
+
+
+
+
+
+
 
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
