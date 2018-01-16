@@ -679,7 +679,13 @@ public class MainActivity extends AppCompatActivity {
             if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE)) {
                 try {
                     TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                    return tm.getDeviceId();
+                    String deviceId = tm.getDeviceId();
+                    Log.e("DEVICE.ID", "normal mode: " + deviceId);
+                    if (deviceId == null) {
+                        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                        Log.e("DEVICE.ID", "compatible mode: " + deviceId);
+                    }
+                    return deviceId;
                 } catch (Exception e) {
                     Log.e("DEVICE.ID", e.getMessage());
                 }
