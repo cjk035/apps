@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        aset.setDuration(1000);
+        aset.setDuration(800);
         aset.start();
 
 

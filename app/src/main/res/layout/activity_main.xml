@@ -119,7 +119,7 @@
 
         <RelativeLayout
             android:id="@+id/loadAppsAnimate"
-            android:layout_width="32dp"
+            android:layout_width="34dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loadAppsName"
             android:layout_centerHorizontal="true"
