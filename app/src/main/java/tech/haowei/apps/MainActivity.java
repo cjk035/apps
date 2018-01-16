@@ -216,9 +216,11 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setSupportZoom(false);
+        webView.getSettings().setUserAgentString("Mozilla 5.0 Android Apps (1.0)");
         webView.setVerticalScrollBarEnabled(false);
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setDefaultTextEncodingName("UTF -8");
+        webView.getSettings().setBlockNetworkImage(true);
         webView.addJavascriptInterface(new JavaScript(), "apps");
 
         Intent intent = getIntent();
