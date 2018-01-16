@@ -13,7 +13,8 @@ import java.net.Socket;
 public class AAService extends Service {
 
     public static Socket socket;
-    public boolean isConected = false;
+    public int errorConnection = 0;
+    public final int maxErrorConnection = 3;
 
     @Override
     public void onCreate() {
@@ -69,7 +70,23 @@ public class AAService extends Service {
                     Log.e("AASERVICE", e.getMessage());
                     intent.putExtra("text", "服务连接失败");
                     sendBroadcast(intent);
+                    errorConnection++;
                 }
+
+                if (errorConnection > 0 && errorConnection <= 3) {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        Log.e("AASERVICE.THREAD", e.getMessage());
+                    }
+
+                    Log.e("AASERVICE", "connection reset: " + errorConnection);
+                    tcpInit();
+
+                } else {
+                    Log.e("AASERVICE", "connection reset timeout");
+                }
+
             }
 
         }).start();

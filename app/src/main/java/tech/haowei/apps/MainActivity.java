@@ -649,19 +649,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void sendNotiticationText(String text) {
+        public void sendNotificationText(String text) {
 
-            Intent intent = new Intent();
-            PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 1, intent, 0);
-            NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "")
-                    .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .setContentTitle("测试")
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setFullScreenIntent(pi, true)
-                    .setContentText(text);
+            try {
+                Intent intent = new Intent();
+                PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 1, intent, 0);
+                NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "")
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle("测试")
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setFullScreenIntent(pi, true)
+                        .setContentText(text);
 
-            if (notifyManager != null) notifyManager.notify(1, builder.build());
+                notifyManager.notify(1, builder.build());
+            } catch (Exception e) {
+                Log.e("NOTIFICATION", e.getMessage());
+            }
 
         }
 
