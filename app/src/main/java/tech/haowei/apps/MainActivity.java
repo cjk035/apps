@@ -26,10 +26,12 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -670,6 +672,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("NOTIFICATION", e.getMessage());
             }
 
+        }
+
+        @JavascriptInterface
+        public String getDeviceID() {
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+                try {
+                    TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    return tm.getDeviceId();
+                } catch (Exception e) {
+                    Log.e("DEVICE.ID", e.getMessage());
+                }
+            }
+            return null;
         }
 
     }
