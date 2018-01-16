@@ -247,9 +247,11 @@ public class MainActivity extends AppCompatActivity {
         scaleX3.setRepeatCount(ValueAnimator.INFINITE);
         scaleY3.setRepeatCount(ValueAnimator.INFINITE);
 
-        aset.play(scaleX1).with(scaleY1).with(scaleA1);
-        aset.play(scaleX2).with(scaleY2).with(scaleA2);
-        aset.play(scaleX3).with(scaleY3).with(scaleA3);
+        aset.play(scaleA1).with(scaleX1).with(scaleY1);
+        aset.play(scaleA2).with(scaleX2).with(scaleY2);
+        aset.play(scaleA3).with(scaleX3).with(scaleY3);
+
+
 
 
         aset.setDuration(1000);
@@ -333,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        //loadView.setVisibility(View.GONE);
+                        loadView.setVisibility(View.GONE);
                     }
 
                 });
