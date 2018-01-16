@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="209dp"
+            android:layout_marginTop="180dp"
             android:text="&#xe60e;"
             android:textColor="#3BAF34"
             android:textSize="64sp" />
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/loadAppsName"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="15dp">
 
             <View
                 android:id="@+id/animate_1"

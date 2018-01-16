@@ -331,14 +331,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                runOnUiThread(new Runnable() {
+                /*runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
                         loadView.setVisibility(View.GONE);
                     }
 
-                });
+                });*/
+
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        loadView.setVisibility(View.GONE);
+                    }
+
+                }, 2500);
 
             }
 
