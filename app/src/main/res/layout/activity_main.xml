@@ -15,13 +15,13 @@
             android:id="@+id/firstButton"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/black"
+            android:background="@drawable/first_active"
             android:clickable="true"
-            android:textSize="18sp"
+            android:gravity="center"
             android:text="&#xe61d;"
-            android:visibility="gone"
-            android:background="@drawable/first_active"/>
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/navigatorTitle"
@@ -84,16 +84,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layerType="software"
-        android:layout_below="@+id/navigatorBar" />
+        android:layout_below="@+id/navigatorBar"
+        android:layerType="software" />
 
     <RelativeLayout
         android:id="@+id/loadView"
-        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:animateLayoutChanges="true">
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@android:color/white">
 
         <TextView
             android:id="@+id/loadAppsIcon"
@@ -101,51 +101,51 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="170dp"
             android:text="&#xe60e;"
             android:textColor="#3BAF34"
             android:textSize="64sp" />
 
         <TextView
             android:id="@+id/loadAppsName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loadAppsIcon"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
             android:text="小程序"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:id="@+id/loadAppsAnimate"
-            android:layout_width="50dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/loadAppsName"
-            android:layout_marginTop="15dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp">
 
             <View
                 android:id="@+id/animate_1"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/load_point"/>
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/load_point" />
 
             <View
                 android:id="@+id/animate_2"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/load_point"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/load_point" />
 
             <View
                 android:id="@+id/animate_3"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/load_point"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
                 android:layout_alignParentEnd="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/load_point" />
 
 
         </RelativeLayout>

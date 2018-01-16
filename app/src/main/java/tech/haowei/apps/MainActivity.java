@@ -1,6 +1,7 @@
 package tech.haowei.apps;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -234,8 +235,8 @@ public class MainActivity extends AppCompatActivity {
         scaleY1.setRepeatCount(ValueAnimator.INFINITE);
 
         ObjectAnimator scaleA2 = ObjectAnimator.ofFloat(animate_2, "alpha", 0.2f, 1, 0.2f);
-        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(animate_2, "scaleX", 0.5f, 0.75f, 1, 0.5f);
-        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(animate_2, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(animate_2, "scaleX", 1, 0.75f, 0.5f, 1);
+        ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(animate_2, "scaleY", 1, 0.75f, 0.5f, 1);
         scaleA2.setRepeatCount(ValueAnimator.INFINITE);
         scaleX2.setRepeatCount(ValueAnimator.INFINITE);
         scaleY2.setRepeatCount(ValueAnimator.INFINITE);
@@ -247,9 +248,9 @@ public class MainActivity extends AppCompatActivity {
         scaleX3.setRepeatCount(ValueAnimator.INFINITE);
         scaleY3.setRepeatCount(ValueAnimator.INFINITE);
 
-        aset.play(scaleA1).with(scaleX1).with(scaleY1);
-        aset.play(scaleA2).with(scaleX2).with(scaleY2);
-        aset.play(scaleA3).with(scaleX3).with(scaleY3);
+        aset.play(scaleX1).with(scaleY1).with(scaleA1);
+        aset.play(scaleX2).with(scaleY2).with(scaleA2);
+        aset.play(scaleX3).with(scaleY3).with(scaleA3);
 
 
 
@@ -331,24 +332,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                /*runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
                         loadView.setVisibility(View.GONE);
                     }
 
-                });*/
-
-
-                new Handler().postDelayed(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        loadView.setVisibility(View.GONE);
-                    }
-
-                }, 2500);
+                });
 
             }
 
