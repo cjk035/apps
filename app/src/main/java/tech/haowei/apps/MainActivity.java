@@ -225,24 +225,33 @@ public class MainActivity extends AppCompatActivity {
         View animate_2 = (View) findViewById(R.id.animate_2);
         View animate_3 = (View) findViewById(R.id.animate_3);
 
-        /*ObjectAnimator scaleX1 = ObjectAnimator.ofFloat(animate_1, "scaleX", 0.5f, 0.75f, 1, 0.5f);
-        ObjectAnimator scaleY1 = ObjectAnimator.ofFloat(animate_1, "scaleY", 0.5f, 0.75f, 1, 0.5f);
-        scaleX1.setRepeatCount(ValueAnimator.INFINITE);
-        scaleY1.setRepeatCount(ValueAnimator.INFINITE);*/
 
+        ObjectAnimator scaleA1 = ObjectAnimator.ofFloat(animate_1, "alpha", 0.2f, 1, 0.2f);
+        ObjectAnimator scaleX1 = ObjectAnimator.ofFloat(animate_1, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleY1 = ObjectAnimator.ofFloat(animate_1, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleA1.setRepeatCount(ValueAnimator.INFINITE);
+        scaleX1.setRepeatCount(ValueAnimator.INFINITE);
+        scaleY1.setRepeatCount(ValueAnimator.INFINITE);
+
+        ObjectAnimator scaleA2 = ObjectAnimator.ofFloat(animate_2, "alpha", 0.2f, 1, 0.2f);
         ObjectAnimator scaleX2 = ObjectAnimator.ofFloat(animate_2, "scaleX", 0.5f, 0.75f, 1, 0.5f);
         ObjectAnimator scaleY2 = ObjectAnimator.ofFloat(animate_2, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleA2.setRepeatCount(ValueAnimator.INFINITE);
         scaleX2.setRepeatCount(ValueAnimator.INFINITE);
         scaleY2.setRepeatCount(ValueAnimator.INFINITE);
 
-        /*ObjectAnimator scaleX3 = ObjectAnimator.ofFloat(animate_3, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleA3 = ObjectAnimator.ofFloat(animate_3, "alpha", 0.2f, 1, 0.2f);
+        ObjectAnimator scaleX3 = ObjectAnimator.ofFloat(animate_3, "scaleX", 0.5f, 0.75f, 1, 0.5f);
         ObjectAnimator scaleY3 = ObjectAnimator.ofFloat(animate_3, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleA3.setRepeatCount(ValueAnimator.INFINITE);
         scaleX3.setRepeatCount(ValueAnimator.INFINITE);
-        scaleY3.setRepeatCount(ValueAnimator.INFINITE);*/
+        scaleY3.setRepeatCount(ValueAnimator.INFINITE);
 
-        //aset.play(scaleX1).with(scaleY1);
-        aset.play(scaleX2).with(scaleX2);
-        //aset.play(scaleX3).with(scaleY3);
+        aset.play(scaleX1).with(scaleY1).with(scaleA1);
+        aset.play(scaleX2).with(scaleY2).with(scaleA2);
+        aset.play(scaleX3).with(scaleY3).with(scaleA3);
+
+
         aset.setDuration(1000);
         aset.start();
 
