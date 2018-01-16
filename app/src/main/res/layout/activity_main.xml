@@ -117,6 +117,38 @@
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
+        <RelativeLayout
+            android:id="@+id/loadAppsAnimate"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/loadAppsName"
+            android:layout_below="@+id/loadAppsName"
+            android:layout_marginTop="10dp">
+
+            <View
+                android:id="@+id/animate_1"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/load_point"/>
+
+            <View
+                android:id="@+id/animate_2"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/load_point"
+                android:layout_centerHorizontal="true"/>
+
+            <View
+                android:id="@+id/animate_3"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/load_point"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

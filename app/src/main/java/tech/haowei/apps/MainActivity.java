@@ -1,6 +1,9 @@
 package tech.haowei.apps;
 
 import android.Manifest;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -39,6 +42,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -214,6 +218,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(loadAppsIcon, "scaleX", 0.5f, 0.75f, 1, 0.5f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(loadAppsIcon, "scaleY", 0.5f, 0.75f, 1, 0.5f);
+        scaleX.setRepeatCount(ValueAnimator.INFINITE);
+        scaleY.setRepeatCount(ValueAnimator.INFINITE);
+        AnimatorSet set = new AnimatorSet();
+        set.play(scaleX).with(scaleY);
+        set.setDuration(1500);
+        set.start();
+
         webView = (WebView) findViewById(R.id.webView);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
@@ -284,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        loadView.setVisibility(View.GONE);
+                        //loadView.setVisibility(View.GONE);
                     }
 
                 });
