@@ -75,14 +75,15 @@ public class AAService extends Service {
                     errorConnection++;
                 }
 
-                if (errorConnection > 0 && errorConnection <= 3) {
+                Log.e("AASERVICE", "connection reset: " + errorConnection);
+
+                if (errorConnection > 0 && errorConnection < 3) {
                     try {
                         Thread.sleep(5000);
                     } catch (Exception e) {
                         Log.e("AASERVICE.THREAD", e.getMessage());
                     }
 
-                    Log.e("AASERVICE", "connection reset: " + errorConnection);
                     tcpInit();
 
                 } else {
