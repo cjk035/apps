@@ -23,6 +23,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.AudioRecord;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -60,6 +63,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.lang.ref.WeakReference;
@@ -253,17 +257,8 @@ public class MainActivity extends AppCompatActivity {
         aset.play(scaleX3).with(scaleY3).with(scaleA3);
 
 
-
-
         aset.setDuration(800);
         aset.start();
-
-
-
-
-
-
-
 
 
         webView = (WebView) findViewById(R.id.webView);
@@ -743,6 +738,78 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             return null;
+        }
+
+        @JavascriptInterface
+        public void startRecord() {
+
+            try {
+                String tempFile = getExternalCacheDir().getPath() + "/tmp.amr";
+                final MediaRecorder record = new MediaRecorder();
+                record.setAudioSource(MediaRecorder.AudioSource.MIC);
+                record.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
+                record.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+                record.setOutputFile(tempFile);
+                record.prepare();
+                record.start();
+
+                final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("")
+                        .setMessage("正在录音")
+                        .setCancelable(false)
+                        .create();
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        dialog.show();
+                    }
+
+                });
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog.hide();
+                            }
+                        });
+
+                        Log.e("RECORD", "the end");
+                        record.stop();
+                        record.release();
+
+                    }
+
+                }, 5000);
+                Log.e("RECORD.FILEPATH", tempFile);
+                Log.e("RECORD", "let's start");
+            } catch (Exception e) {
+                Log.e("RECORD", e.getMessage());
+            }
+
+        }
+
+        @JavascriptInterface
+        public void playRecord() {
+
+            try {
+                String tempFile = getExternalCacheDir().getPath() + "/tmp.amr";
+                MediaPlayer player = new MediaPlayer();
+                player.setDataSource(tempFile);
+                player.prepare();
+
+                Log.e("PLAYER.DURATION", "length: " + String.format("%.2f", (double) player.getDuration() / 1000));
+                player.start();
+            }catch (Exception e) {
+                Log.e("PLAYER", e.getMessage());
+            }
+
         }
 
     }

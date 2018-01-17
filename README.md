@@ -25,6 +25,8 @@ apps.geoLocation(); //返回定位信息
 apps.getWifiList(); //获取wifi列表
 apps.sendNotificationText(string text); // 设置通知栏消息文本
 apps.getDeviceID(); //获取device id
+apps.startRecord(); //开启录音
+apps.playRecord(); //播放录音
 ```
 
 ### 有问题反馈
