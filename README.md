@@ -27,6 +27,7 @@ apps.sendNotificationText(string text); // 设置通知栏消息文本
 apps.getDeviceID(); //获取device id
 apps.startRecord(); //开启录音
 apps.playRecord(); //播放录音
+apps.getNetworkType(); //获取网络类型
 ```
 
 ### 有问题反馈
