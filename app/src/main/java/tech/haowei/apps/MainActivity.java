@@ -12,6 +12,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -27,7 +28,9 @@ import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.ConnectivityManager;
+import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -306,6 +309,26 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("LOAD.ATTRIBUTES", e.getMessage());
             }
 
+            try {
+                ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                connectivity.requestNetwork(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+                    @Override
+                    public void onAvailable(Network network) {
+                        onNetChange(true);
+                        super.onAvailable(network);
+                    }
+
+                    @Override
+                    public void onLost(Network network) {
+                        onNetChange(false);
+                        super.onLost(network);
+                    }
+
+                });
+            }catch (Exception e) {
+                Log.e("NETCHANGE", e.getMessage());
+            }
+
         }
 
 
@@ -379,19 +402,24 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void showBroadcast(final Object obj) {
+    public void onNetChange(final boolean available) {
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("广播消息")
-                        .setMessage(obj.toString())
-                        .create()
-                        .show();
-            }
 
+                String message = "";
+                if (available) {
+                    message = "网络已恢复";
+                    webView.reload();
+                } else {
+                    message = "网络已断开";
+                }
+                webView.loadUrl("javascript:alert('"+ message +"');");
+            }
         });
+
+        Log.e("NET.CHANGE.EVENT", "initialize");
     }
 
     public class JavaScript {
