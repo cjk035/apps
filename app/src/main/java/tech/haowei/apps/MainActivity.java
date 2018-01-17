@@ -47,6 +47,7 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -314,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
                 connectivity.requestNetwork(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
                     @Override
                     public void onAvailable(Network network) {
-                        onNetChange(true);
+                        //onNetChange(true);
                         super.onAvailable(network);
                     }
 
@@ -330,6 +331,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -352,14 +355,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                runOnUiThread(new Runnable() {
+                Log.e("WEBVIEW.FINISHED", "URL: " + url);
 
-                    @Override
-                    public void run() {
-                        loadView.setVisibility(View.GONE);
-                    }
-
-                });
 
             }
 
@@ -367,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
         webView.setWebChromeClient(new WebChromeClient() {
 
-            /*private boolean done = false;
+            private boolean done = false;
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -376,9 +373,19 @@ public class MainActivity extends AppCompatActivity {
                 } else if (!done && newProgress >= 75) {
                     done = true;
                     Log.e("LOCAL.SERVICE", "JavaScript Service Bridge Successful");
-                    webView.loadUrl("javascript:window.dispatchEvent(new Event('ready'))");
+                    //webView.loadUrl("javascript:window.dispatchEvent(new Event('ready'))");
+
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            loadView.setVisibility(View.GONE);
+                        }
+
+                    });
+
                 }
-            }*/
+            }
 
             @Override
             public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
