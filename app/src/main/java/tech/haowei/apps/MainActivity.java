@@ -26,6 +26,8 @@ import android.location.LocationManager;
 import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
@@ -806,9 +808,58 @@ public class MainActivity extends AppCompatActivity {
 
                 Log.e("PLAYER.DURATION", "length: " + String.format("%.2f", (double) player.getDuration() / 1000));
                 player.start();
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.e("PLAYER", e.getMessage());
             }
+
+        }
+
+        @JavascriptInterface
+        public String getNetworkType() {
+
+            String type = "";
+            ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity == null) return type;
+
+            NetworkInfo netInfo = connectivity.getActiveNetworkInfo();
+            if (netInfo == null || !netInfo.isAvailable()) return type;
+
+            if (netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                type = "WIFI";
+            } else if (netInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                String subTypeName = netInfo.getSubtypeName();
+                int networkType = netInfo.getSubtype();
+                switch (networkType) {
+                    case TelephonyManager.NETWORK_TYPE_GPRS:
+                    case TelephonyManager.NETWORK_TYPE_EDGE:
+                    case TelephonyManager.NETWORK_TYPE_CDMA:
+                    case TelephonyManager.NETWORK_TYPE_1xRTT:
+                    case TelephonyManager.NETWORK_TYPE_IDEN:
+                        type = "2G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_UMTS:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                    case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    case TelephonyManager.NETWORK_TYPE_HSPA:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                    case TelephonyManager.NETWORK_TYPE_EHRPD:
+                    case TelephonyManager.NETWORK_TYPE_HSPAP:
+                        type = "3G";
+                        break;
+                    case TelephonyManager.NETWORK_TYPE_LTE:
+                        type = "4G";
+                        break;
+                    default:
+                        if (subTypeName.equalsIgnoreCase("TD-SCDMA") || subTypeName.equalsIgnoreCase("WCDMA") || subTypeName.equalsIgnoreCase("CDMA2000")) {
+                            type = "3G";
+                        }
+                }
+            }
+
+
+            return type;
 
         }
 
