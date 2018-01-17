@@ -819,10 +819,10 @@ public class MainActivity extends AppCompatActivity {
 
             String type = "";
             ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            if (connectivity == null) return type;
+            if (connectivity == null) return null;
 
             NetworkInfo netInfo = connectivity.getActiveNetworkInfo();
-            if (netInfo == null || !netInfo.isAvailable()) return type;
+            if (netInfo == null || !netInfo.isAvailable()) return null;
 
             if (netInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 type = "WIFI";
@@ -858,9 +858,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-
+            if (type.isEmpty()) return null;
             return type;
-
         }
 
     }
