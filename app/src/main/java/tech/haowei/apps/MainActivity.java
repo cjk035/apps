@@ -972,6 +972,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        @JavascriptInterface
+        public void setColorPrimary(String color) {
+            if (!color.startsWith("#")) color = "#ffffff";
+            colorPrimary = color;
+        }
+
     }
 
 }

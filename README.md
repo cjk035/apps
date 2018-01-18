@@ -4,6 +4,7 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 
 ![演示界面](https://github.com/haowei4032/apps/raw/master/preview/1797827030.jpg)
 ![演示界面](https://github.com/haowei4032/apps/raw/master/preview/728371208.jpg)
+![演示界面](https://github.com/haowei4032/apps/raw/master/preview/664023026.jpg)
 
 ### 测试JS API
 ```javascript
@@ -29,6 +30,7 @@ apps.startRecord(); //开启录音
 apps.playRecord(); //播放录音
 apps.getNetworkType(); //获取网络类型
 apps.layoutFullscreen(); // 布局全屏
+apps.setColorPrimary(string color); // 设置主颜色
 ```
 
 ### 有问题反馈
