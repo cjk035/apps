@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     public TextView afterButton;
     public TextView loadAppsIcon;
     public RelativeLayout loadView;
+    public String colorPrimary = "#FFFFFF";
     public View splView;
     public RelativeLayout rightView;
     public RelativeLayout navigatorView;
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         window.addFlags(WindowManager.LayoutParams
                 .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#FFFFFF"));
+        window.setStatusBarColor(Color.parseColor(colorPrimary));
         aset = new AnimatorSet();
 
 
@@ -434,6 +435,16 @@ public class MainActivity extends AppCompatActivity {
         Log.e("NET.CHANGE.EVENT", "initialize");
     }
 
+    public boolean isDarkColor(String color) {
+        int colors[] = new int[3];
+        colors[0] = (int) Integer.parseInt(color.substring(1, 3),16);
+        colors[1] = (int) Integer.parseInt(color.substring(3, 5),16);
+        colors[2] = (int) Integer.parseInt(color.substring(5),16);
+        int grayLevel = (int) (colors[0] * 0.299 + colors[1] * 0.587 + colors[2] * 0.114);
+        Log.e("GRAY", String.format("grayLevel: %d", grayLevel));
+        return grayLevel <= 192;
+    }
+
     public class JavaScript {
 
         @JavascriptInterface
@@ -448,26 +459,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void setNavigatorBarColor(final String color) {
+        public void setNavigatorBarColor(String color_src) {
+            if (!color_src.startsWith("#")) color_src = "#ffffff";
+            final String color = color_src;
+
+            Log.e("COLOR.PARSE", "INT: " + Color.parseColor(color));
+            colorPrimary = color;
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
 
                     // View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+
                     window.addFlags(WindowManager.LayoutParams
                             .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-                    if (color.equals("black")) {
-                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                    } else {
-                        window.getDecorView().setSystemUiVisibility(View
-                                .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                    }
-
                     window.setStatusBarColor(Color.parseColor(color));
                     navigatorView.setBackgroundColor(Color.parseColor(color));
 
-                    if (!color.equals("white")) {
+                    if (isDarkColor(color)) {
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
                         GradientDrawable gd = new GradientDrawable();
                         gd.setColor(Color.parseColor("#aaa5a5a5"));
                         gd.setCornerRadius(rightView.getHeight());
@@ -479,8 +491,15 @@ public class MainActivity extends AppCompatActivity {
                         afterButton.setTextColor(Color.parseColor("white"));
                         titleView.setTextColor(Color.parseColor("white"));
                     } else {
+                        window.getDecorView().setSystemUiVisibility(View
+                                .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                         titleView.setTextColor(Color.parseColor("black"));
                     }
+
+                   Log.e("COLOR.SUBSTRING", color.substring(1, 3));
+                   Log.e("COLOR.SUBSTRING", color.substring(3, 5));
+                   Log.e("COLOR.SUBSTRING", color.substring(5));
+
                 }
             });
         }
@@ -507,6 +526,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
+
                     if (enable) {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE);
                         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -531,6 +551,14 @@ public class MainActivity extends AppCompatActivity {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
                         navigatorView.setVisibility(View.VISIBLE);
+
+                        if (isDarkColor(colorPrimary)) {
+                            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                        } else {
+                            window.getDecorView().setSystemUiVisibility(View
+                                    .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        }
+
                     }
 
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
@@ -930,6 +958,14 @@ public class MainActivity extends AppCompatActivity {
                     splView.setBackgroundColor(Color.parseColor("white"));
 
                     navigatorView.setVisibility(View.GONE);
+
+                    if (isDarkColor(colorPrimary)) {
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                    } else {
+                        window.getDecorView().setSystemUiVisibility(View
+                                .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                    }
+
                 }
 
             });
