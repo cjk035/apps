@@ -531,13 +531,13 @@ public class MainActivity extends AppCompatActivity {
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
                         navigatorView.setVisibility(View.VISIBLE);
-
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                                (rightView.getWidth(), rightView.getHeight());
-                        params.setMargins(0, dip2px(10), dip2px(10), 0);
-                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                        rightView.setLayoutParams(params);
                     }
+
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                            (rightView.getWidth(), rightView.getHeight());
+                    params.setMargins(0, dip2px(10), dip2px(10), 0);
+                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    rightView.setLayoutParams(params);
 
                 }
 
@@ -902,6 +902,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
 
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     window.getDecorView().setSystemUiVisibility(View
                             .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View
                             .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
@@ -911,11 +912,11 @@ public class MainActivity extends AppCompatActivity {
                     window.setStatusBarColor(Color.TRANSPARENT);
 
 
-                    /*RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                             (rightView.getWidth(), rightView.getHeight());
                     params.setMargins(0, dip2px(28), dip2px(10), 0);
                     params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                    rightView.setLayoutParams(params);*/
+                    rightView.setLayoutParams(params);
 
                     GradientDrawable gd = new GradientDrawable();
                     gd.setColor(Color.parseColor("#aaa5a5a5"));
