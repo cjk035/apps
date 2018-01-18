@@ -497,31 +497,12 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void fullScreen(final boolean enable) {
 
+            Log.e("FULLSCREEN", "value: " + (enable ? "true" : "false"));
             runOnUiThread(new Runnable() {
 
                 @Override
                 public void run() {
-                    if (!enable) {
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                                (rightView.getWidth(), rightView.getHeight());
-                        params.setMargins(0, dip2px(10), dip2px(10), 0);
-                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                        rightView.setLayoutParams(params);
-                        navigatorView.setVisibility(View.VISIBLE);
-
-                        int flag = window.getAttributes().flags;
-                        if ((flag & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                                == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-                            if (window.getStatusBarColor() != Color.parseColor("black")) {
-                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                            } else {
-                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                            }
-                            window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                        }
-
-
-                    } else {
+                    if (enable) {
                         GradientDrawable gd = new GradientDrawable();
                         gd.setColor(Color.parseColor("#aaa5a5a5"));
                         gd.setCornerRadius(rightView.getHeight());
@@ -540,6 +521,26 @@ public class MainActivity extends AppCompatActivity {
 
                         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
                         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    } else {
+                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                                (rightView.getWidth(), rightView.getHeight());
+                        params.setMargins(0, dip2px(10), dip2px(10), 0);
+                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                        rightView.setLayoutParams(params);
+                        navigatorView.setVisibility(View.VISIBLE);
+
+                        int flag = window.getAttributes().flags;
+                        if ((flag & WindowManager.LayoutParams.FLAG_FULLSCREEN)
+                                == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
+                            if (window.getStatusBarColor() != Color.parseColor("black")) {
+                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                            } else {
+                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                            }
+
+                        }
+
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     }
                 }
 
@@ -895,6 +896,49 @@ public class MainActivity extends AppCompatActivity {
 
             if (type.isEmpty()) return null;
             return type;
+        }
+
+        @JavascriptInterface
+        public void layoutFullscreen() {
+            runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    /*
+                    */
+                    window.getDecorView().setSystemUiVisibility(View
+                            .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View
+                            .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                    //window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    window.addFlags(WindowManager.LayoutParams
+                            .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    window.setStatusBarColor(Color.TRANSPARENT);
+
+                    GradientDrawable gd = new GradientDrawable();
+                    gd.setColor(Color.parseColor("#aaa5a5a5"));
+                    gd.setCornerRadius(rightView.getHeight());
+                    gd.setStroke(1, Color.parseColor("white"));
+                    rightView.setBackground(gd);
+
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                            (rightView.getWidth(), rightView.getHeight());
+                    params.setMargins(0, dip2px(28), dip2px(10), 0);
+                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    rightView.setLayoutParams(params);
+
+                    beforeButton.setTextColor(Color.parseColor("white"));
+                    afterButton.setTextColor(Color.parseColor("white"));
+                    splView.setBackgroundColor(Color.parseColor("white"));
+
+                    params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams
+                            .MATCH_PARENT, RelativeLayout.LayoutParams
+                            .MATCH_PARENT);
+                    webView.setLayoutParams(params);
+                    navigatorView.setVisibility(View.GONE);
+                }
+
+            });
+
         }
 
     }
