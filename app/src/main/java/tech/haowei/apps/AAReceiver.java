@@ -24,7 +24,7 @@ public class AAReceiver extends BroadcastReceiver {
                     .setContentTitle("广播消息")
                     .setDefaults(Notification.DEFAULT_ALL)
                     .setAutoCancel(true)
-                    .setFullScreenIntent(pi, true)
+                    .setPriority(Notification.PRIORITY_HIGH)
                     .setContentText(intent.getStringExtra("text"));
 
             notifyManager.notify(id, builder.build());

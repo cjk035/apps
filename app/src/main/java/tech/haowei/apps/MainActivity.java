@@ -766,15 +766,14 @@ public class MainActivity extends AppCompatActivity {
         public void sendNotificationText(String text) {
 
             try {
-                Intent intent = new Intent();
-                PendingIntent pi = PendingIntent.getActivity(MainActivity.this, 1, intent, 0);
+
                 NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "")
                         .setSmallIcon(R.mipmap.ic_launcher_round)
                         .setContentTitle("测试")
                         .setDefaults(Notification.DEFAULT_ALL)
                         .setAutoCancel(true)
-                        .setFullScreenIntent(pi, true)
+                        .setPriority(Notification.PRIORITY_HIGH)
                         .setContentText(text);
 
                 notifyManager.notify(1, builder.build());
