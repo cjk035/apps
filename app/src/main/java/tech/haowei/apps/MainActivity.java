@@ -58,6 +58,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -275,7 +276,10 @@ public class MainActivity extends AppCompatActivity {
         webView.setVerticalScrollBarEnabled(false);
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setDefaultTextEncodingName("UTF -8");
-        webView.getSettings().setBlockNetworkImage(true);
+        webView.getSettings().setBlockNetworkImage(false);
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        webView.getSettings().setLoadWithOverviewMode(true);
+
         webView.addJavascriptInterface(new JavaScript(), "apps");
 
         Intent intent = getIntent();
@@ -355,6 +359,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
+                webView.getSettings().setBlockNetworkImage(false);
                 Log.e("WEBVIEW.FINISHED", "URL: " + url);
 
 
@@ -503,45 +508,37 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (enable) {
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE);
+                        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+
+                        navigatorView.setVisibility(View.GONE);
+
                         GradientDrawable gd = new GradientDrawable();
                         gd.setColor(Color.parseColor("#aaa5a5a5"));
                         gd.setCornerRadius(rightView.getHeight());
                         gd.setStroke(1, Color.parseColor("white"));
                         rightView.setBackground(gd);
-                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                                (rightView.getWidth(), rightView.getHeight());
-                        params.setMargins(0, dip2px(16), dip2px(10), 0);
-                        params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                        rightView.setLayoutParams(params);
 
                         beforeButton.setTextColor(Color.parseColor("white"));
                         afterButton.setTextColor(Color.parseColor("white"));
                         splView.setBackgroundColor(Color.parseColor("white"));
-                        navigatorView.setVisibility(View.GONE);
 
-                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
-                        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
                     } else {
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+                        navigatorView.setVisibility(View.VISIBLE);
+
                         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                                 (rightView.getWidth(), rightView.getHeight());
                         params.setMargins(0, dip2px(10), dip2px(10), 0);
                         params.addRule(RelativeLayout.ALIGN_PARENT_END);
                         rightView.setLayoutParams(params);
-                        navigatorView.setVisibility(View.VISIBLE);
-
-                        int flag = window.getAttributes().flags;
-                        if ((flag & WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                                == WindowManager.LayoutParams.FLAG_FULLSCREEN) {
-                            if (window.getStatusBarColor() != Color.parseColor("black")) {
-                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                            } else {
-                                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                            }
-
-                        }
-
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     }
+
                 }
 
             });
@@ -904,15 +901,21 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                    /*
-                    */
+
                     window.getDecorView().setSystemUiVisibility(View
                             .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View
-                            .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-                    //window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                            .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
                     window.addFlags(WindowManager.LayoutParams
                             .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                     window.setStatusBarColor(Color.TRANSPARENT);
+
+
+                    /*RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                            (rightView.getWidth(), rightView.getHeight());
+                    params.setMargins(0, dip2px(28), dip2px(10), 0);
+                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    rightView.setLayoutParams(params);*/
 
                     GradientDrawable gd = new GradientDrawable();
                     gd.setColor(Color.parseColor("#aaa5a5a5"));
@@ -920,20 +923,11 @@ public class MainActivity extends AppCompatActivity {
                     gd.setStroke(1, Color.parseColor("white"));
                     rightView.setBackground(gd);
 
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                            (rightView.getWidth(), rightView.getHeight());
-                    params.setMargins(0, dip2px(28), dip2px(10), 0);
-                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
-                    rightView.setLayoutParams(params);
 
                     beforeButton.setTextColor(Color.parseColor("white"));
                     afterButton.setTextColor(Color.parseColor("white"));
                     splView.setBackgroundColor(Color.parseColor("white"));
 
-                    params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams
-                            .MATCH_PARENT, RelativeLayout.LayoutParams
-                            .MATCH_PARENT);
-                    webView.setLayoutParams(params);
                     navigatorView.setVisibility(View.GONE);
                 }
 

@@ -28,6 +28,7 @@ apps.getDeviceID(); //获取device id
 apps.startRecord(); //开启录音
 apps.playRecord(); //播放录音
 apps.getNetworkType(); //获取网络类型
+apps.layoutFullscreen(); // 布局全屏
 ```
 
 ### 有问题反馈
