@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 public class AAReceiver extends BroadcastReceiver {
 
@@ -18,7 +17,8 @@ public class AAReceiver extends BroadcastReceiver {
         try {
             int id = intent.getIntExtra("id", 0);
             NotificationManager notifyManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(), 0);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, new Intent(context,
+                    MainActivity.class), 0);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "")
                     .setSmallIcon(R.mipmap.ic_launcher_round)
                     .setContentTitle("广播消息")
