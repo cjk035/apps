@@ -41,5 +41,5 @@ apps.setColorPrimary(string color); // 设置主颜色
 ### 捐助开发者
 这是一个`开源项目`，你可以做非商业用途，你可以参与编写，你也可以捐助此项目。
 
-![支付宝红包](https://github.com/haowei4032/apps/raw/master/preview/1776602611.jpg)
+![支付宝红包](https://github.com/haowei4032/apps/raw/master/preview/1776602611.jpg =x300)
 
