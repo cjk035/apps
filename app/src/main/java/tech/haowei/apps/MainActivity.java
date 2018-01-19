@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setVerticalScrollBarEnabled(false);
         webView.setHorizontalScrollBarEnabled(false);
         webView.getSettings().setDefaultTextEncodingName("UTF -8");
-        webView.getSettings().setBlockNetworkImage(false);
+        webView.getSettings().setBlockNetworkImage(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         webView.getSettings().setLoadWithOverviewMode(true);
 
@@ -356,7 +356,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                webView.getSettings().setBlockNetworkImage(false);
+
+
                 Log.e("WEBVIEW.FINISHED", "URL: " + url);
 
 
@@ -375,7 +376,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (!done && newProgress >= 75) {
                     done = true;
                     Log.e("LOCAL.SERVICE", "JavaScript Service Bridge Successful");
-                    //webView.loadUrl("javascript:window.dispatchEvent(new Event('ready'))");
+                    ///webView.loadUrl("javascript:window.dispatchEvent(new Event('ready'))");
+
+                    webView.getSettings().setBlockNetworkImage(false);
 
                     runOnUiThread(new Runnable() {
 
