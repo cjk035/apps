@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (firstButton.getVisibility() == View.GONE) {
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout
+                    .LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
             params.setMarginStart(dip2px(15));
             titleView.setLayoutParams(params);
         }
@@ -167,13 +168,16 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
 
                         LinearLayout view = new LinearLayout(MainActivity.this);
-                        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
+                                .MATCH_PARENT));
                         view.setOrientation(LinearLayout.VERTICAL);
                         TextView text = new TextView(MainActivity.this);
                         text.setText("分享");
                         text.setTextColor(Color.parseColor("black"));
                         text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, dip2px(40)));
                         text.setGravity(Gravity.CENTER);
                         view.addView(text);
 
@@ -181,7 +185,8 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("投诉");
                         text.setTextColor(Color.parseColor("black"));
                         text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, dip2px(40)));
                         text.setGravity(Gravity.CENTER);
                         view.addView(text);
 
@@ -189,7 +194,8 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("添加到桌面");
                         text.setTextColor(Color.parseColor("black"));
                         text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, dip2px(40)));
                         text.setGravity(Gravity.CENTER);
                         view.addView(text);
 
@@ -197,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
                         text.setText("关于".concat(appTitle));
                         text.setTextColor(Color.parseColor("black"));
                         text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dip2px(40)));
+                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                                .LayoutParams.MATCH_PARENT, dip2px(40)));
                         text.setGravity(Gravity.CENTER);
                         view.addView(text);
 
@@ -274,6 +281,8 @@ public class MainActivity extends AppCompatActivity {
         String url = intent.getStringExtra("url");
         if (url != null) {
             Log.e("INTENT", url);
+            boolean cross = intent.getBooleanExtra("cross", false);
+            if (!cross) loadView.setVisibility(View.GONE);
             webView.loadUrl(url);
         } else {
 
@@ -303,8 +312,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
-                ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-                connectivity.requestNetwork(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+                ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context
+                        .CONNECTIVITY_SERVICE);
+                connectivity.requestNetwork(new NetworkRequest.Builder().build(), new
+                        ConnectivityManager.NetworkCallback() {
                     @Override
                     public void onAvailable(Network network) {
                         //onNetChange(true);
@@ -318,13 +329,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 });
-            }catch (Exception e) {
+            } catch (Exception e) {
                 Log.e("NETCHANGE", e.getMessage());
             }
 
         }
-
-
 
 
         webView.setWebViewClient(new WebViewClient() {
@@ -415,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     message = "网络已断开";
                 }
-                webView.loadUrl("javascript:alert('"+ message +"');");
+                webView.loadUrl("javascript:alert('" + message + "');");
             }
         });
 
@@ -424,9 +433,9 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean isDarkColor(String color) {
         int colors[] = new int[3];
-        colors[0] = (int) Integer.parseInt(color.substring(1, 3),16);
-        colors[1] = (int) Integer.parseInt(color.substring(3, 5),16);
-        colors[2] = (int) Integer.parseInt(color.substring(5),16);
+        colors[0] = (int) Integer.parseInt(color.substring(1, 3), 16);
+        colors[1] = (int) Integer.parseInt(color.substring(3, 5), 16);
+        colors[2] = (int) Integer.parseInt(color.substring(5), 16);
         int grayLevel = (int) (colors[0] * 0.299 + colors[1] * 0.587 + colors[2] * 0.114);
         Log.e("GRAY", String.format("grayLevel: %d", grayLevel));
         return grayLevel <= 192;
@@ -483,9 +492,9 @@ public class MainActivity extends AppCompatActivity {
                         titleView.setTextColor(Color.parseColor("black"));
                     }
 
-                   Log.e("COLOR.SUBSTRING", color.substring(1, 3));
-                   Log.e("COLOR.SUBSTRING", color.substring(3, 5));
-                   Log.e("COLOR.SUBSTRING", color.substring(5));
+                    Log.e("COLOR.SUBSTRING", color.substring(1, 3));
+                    Log.e("COLOR.SUBSTRING", color.substring(3, 5));
+                    Log.e("COLOR.SUBSTRING", color.substring(5));
 
                 }
             });
@@ -502,6 +511,7 @@ public class MainActivity extends AppCompatActivity {
         public void open(final String url) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
             intent.putExtra("url", url);
+            intent.putExtra("cross", false);
             startActivity(intent);
         }
 
@@ -515,7 +525,8 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
 
                     if (enable) {
-                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE);
+                        window.getDecorView().setSystemUiVisibility(View
+                                .SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
                         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
 
@@ -535,12 +546,14 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-                        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        window.getDecorView().setSystemUiVisibility(View
+                                .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
                         navigatorView.setVisibility(View.VISIBLE);
 
                         if (isDarkColor(colorPrimary)) {
-                            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+                            window.getDecorView().setSystemUiVisibility(View
+                                    .SYSTEM_UI_FLAG_VISIBLE);
                         } else {
                             window.getDecorView().setSystemUiVisibility(View
                                     .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -626,7 +639,9 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                            (RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout
+                                    .LayoutParams.MATCH_PARENT);
                     if (enable) {
                         params.setMarginStart(0);
                         params.addRule(RelativeLayout.END_OF, R.id.firstButton);
@@ -645,7 +660,8 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void phoneCall(String mobile, boolean action) {
 
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission
+                    .CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(Intent.ACTION_DEFAULT, Uri.parse("tel:" + mobile));
                 startActivity(intent);
             } else {
@@ -690,16 +706,20 @@ public class MainActivity extends AppCompatActivity {
 
             JSONObject data = new JSONObject();
 
-            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                    PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission
+                    (MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission
+                            (MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                LocationManager locationManager = (LocationManager) getSystemService(Context
+                        .LOCATION_SERVICE);
                 Criteria criteria = new Criteria();
                 criteria.setAccuracy(Criteria.ACCURACY_FINE);
                 criteria.setAltitudeRequired(false);
                 criteria.setBearingRequired(false);
                 criteria.setCostAllowed(true);
                 criteria.setPowerRequirement(Criteria.POWER_LOW);
-                Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, true));
+                Location location = locationManager.getLastKnownLocation(locationManager
+                        .getBestProvider(criteria, true));
 
 
                 if (location != null) {
@@ -754,8 +774,10 @@ public class MainActivity extends AppCompatActivity {
 
             try {
 
-                NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "")
+                NotificationManager notifyManager = (NotificationManager) getSystemService
+                        (Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity
+                        .this, "")
                         .setSmallIcon(R.mipmap.ic_launcher_round)
                         .setContentTitle("测试")
                         .setDefaults(Notification.DEFAULT_ALL)
@@ -772,13 +794,16 @@ public class MainActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public String getDeviceID() {
-            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE)) {
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission
+                    (MainActivity.this, Manifest.permission.READ_PHONE_STATE)) {
                 try {
-                    TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+                    TelephonyManager tm = (TelephonyManager) getSystemService(Context
+                            .TELEPHONY_SERVICE);
                     String deviceId = tm.getDeviceId();
                     Log.e("DEVICE.ID", "normal mode: " + deviceId);
                     if (deviceId == null) {
-                        deviceId = Settings.System.getString(getContentResolver(), Settings.System.ANDROID_ID);
+                        deviceId = Settings.System.getString(getContentResolver(), Settings
+                                .System.ANDROID_ID);
                         Log.e("DEVICE.ID", "compatible mode: " + deviceId);
                     }
                     return deviceId;
@@ -853,7 +878,8 @@ public class MainActivity extends AppCompatActivity {
                 player.setDataSource(tempFile);
                 player.prepare();
 
-                Log.e("PLAYER.DURATION", "length: " + String.format("%.2f", (double) player.getDuration() / 1000));
+                Log.e("PLAYER.DURATION", "length: " + String.format("%.2f", (double) player
+                        .getDuration() / 1000));
                 player.start();
             } catch (Exception e) {
                 Log.e("PLAYER", e.getMessage());
@@ -865,7 +891,8 @@ public class MainActivity extends AppCompatActivity {
         public String getNetworkType() {
 
             String type = "";
-            ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivity = (ConnectivityManager) getSystemService(Context
+                    .CONNECTIVITY_SERVICE);
             if (connectivity == null) return null;
 
             NetworkInfo netInfo = connectivity.getActiveNetworkInfo();
@@ -899,7 +926,9 @@ public class MainActivity extends AppCompatActivity {
                         type = "4G";
                         break;
                     default:
-                        if (subTypeName.equalsIgnoreCase("TD-SCDMA") || subTypeName.equalsIgnoreCase("WCDMA") || subTypeName.equalsIgnoreCase("CDMA2000")) {
+                        if (subTypeName.equalsIgnoreCase("TD-SCDMA") || subTypeName
+                                .equalsIgnoreCase("WCDMA") || subTypeName.equalsIgnoreCase
+                                ("CDMA2000")) {
                             type = "3G";
                         }
                 }
@@ -918,8 +947,9 @@ public class MainActivity extends AppCompatActivity {
 
                     window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     window.getDecorView().setSystemUiVisibility(View
-                            .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View
-                            .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR|View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
+                            .SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View
+                            .SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View
+                            .SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
                     window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
                     window.addFlags(WindowManager.LayoutParams
                             .FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);

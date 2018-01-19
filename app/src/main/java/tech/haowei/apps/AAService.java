@@ -14,7 +14,7 @@ public class AAService extends Service {
 
     public static Socket socket;
     public int errorConnection = 0;
-    public final int maxErrorConnection = 3;
+    public final int maxErrorConnection = 1;
 
     @Override
     public void onCreate() {
@@ -77,7 +77,7 @@ public class AAService extends Service {
 
                 Log.e("AASERVICE", "connection reset: " + errorConnection);
 
-                if (errorConnection > 0 && errorConnection < 3) {
+                if (errorConnection > 0 && errorConnection < maxErrorConnection) {
                     try {
                         Thread.sleep(5000);
                     } catch (Exception e) {
