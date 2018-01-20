@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -167,51 +168,49 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
+                        GradientDrawable gd = new GradientDrawable();
+                        StateListDrawable drawable = new StateListDrawable();
+
+                        gd.setStroke(1, Color.parseColor("#dddddd"));
+                        drawable.addState(new int[]{}, gd);
+
+                        gd = new GradientDrawable();
+                        gd.setColor(Color.parseColor("#cccccc"));
+                        gd.setStroke(1, Color.parseColor("#dddddd"));
+                        drawable.addState(new int[]{android.R.attr.state_pressed,-android.R.attr
+                                .state_selected}, gd);
+
                         LinearLayout view = new LinearLayout(MainActivity.this);
                         view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
                                 .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
                                 .MATCH_PARENT));
                         view.setOrientation(LinearLayout.VERTICAL);
-                        TextView text = new TextView(MainActivity.this);
-                        text.setText("分享");
-                        text.setTextColor(Color.parseColor("black"));
-                        text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, dip2px(40)));
-                        text.setGravity(Gravity.CENTER);
-                        view.addView(text);
 
-                        text = new TextView(MainActivity.this);
-                        text.setText("投诉");
-                        text.setTextColor(Color.parseColor("black"));
-                        text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, dip2px(40)));
-                        text.setGravity(Gravity.CENTER);
-                        view.addView(text);
 
-                        text = new TextView(MainActivity.this);
-                        text.setText("添加到桌面");
-                        text.setTextColor(Color.parseColor("black"));
-                        text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, dip2px(40)));
-                        text.setGravity(Gravity.CENTER);
-                        view.addView(text);
+                        String[] list = new String[]{"分享","投诉","添加到桌面","关于%s"};
 
-                        text = new TextView(MainActivity.this);
-                        text.setText("关于".concat(appTitle));
-                        text.setTextColor(Color.parseColor("black"));
-                        text.setTextSize(16);
-                        text.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, dip2px(40)));
-                        text.setGravity(Gravity.CENTER);
-                        view.addView(text);
+                        for (String item : list) {
+                            TextView text = new TextView(MainActivity.this);
 
+                            text.setText(String.format(item, appTitle));
+                            text.setTextColor(Color.parseColor("black"));
+                            text.setTextSize(17);
+                            text.setLayoutParams(new LinearLayout.LayoutParams
+                                    (LinearLayout
+                                            .LayoutParams.MATCH_PARENT, dip2px(44)));
+                            text.setGravity(Gravity.CENTER);
+                            text.setPadding(-2, -2, -2, 0);
+                            text.setClickable(true);
+                            text.setFocusable(true);
+                            text.setBackground(drawable);
+
+                            view.addView(text);
+                        }
 
                         new AlertDialog.Builder(MainActivity.this)
                                 .setView(view)
                                 .create().show();
+
                     }
 
                 });
