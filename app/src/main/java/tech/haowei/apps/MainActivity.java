@@ -6,6 +6,8 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -32,6 +34,7 @@ import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.provider.Settings;
@@ -121,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         firstButton.setTypeface(iconfont);
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
-
 
         if (firstButton.getVisibility() == View.GONE) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout
@@ -512,6 +514,9 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void open(final String url) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            if (Build.VERSION.SDK_INT >= 24) {
+                intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT | Intent.FLAG_ACTIVITY_NEW_TASK);
+            }
             intent.putExtra("url", url);
             intent.putExtra("cross", false);
             startActivity(intent);
