@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         beforeButton.setTypeface(iconfont);
         afterButton.setTypeface(iconfont);
 
+
         if (firstButton.getVisibility() == View.GONE) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout
                     .LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -514,9 +515,6 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void open(final String url) {
             Intent intent = new Intent(MainActivity.this, MainActivity.class);
-            if (Build.VERSION.SDK_INT >= 24) {
-                intent.setFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT | Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
             intent.putExtra("url", url);
             intent.putExtra("cross", false);
             startActivity(intent);
