@@ -166,57 +166,44 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-
-                        GradientDrawable gd = new GradientDrawable();
-                        StateListDrawable drawable = new StateListDrawable();
-
-                        gd.setStroke(1, Color.parseColor("#dddddd"));
-                        drawable.addState(new int[]{}, gd);
-
-                        gd = new GradientDrawable();
-                        gd.setColor(Color.parseColor("#cccccc"));
-                        gd.setStroke(1, Color.parseColor("#dddddd"));
-                        drawable.addState(new int[]{android.R.attr.state_pressed,-android.R.attr
-                                .state_selected}, gd);
-
-                        LinearLayout view = new LinearLayout(MainActivity.this);
-                        view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
-                                .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
-                                .MATCH_PARENT));
-                        view.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout layout = new LinearLayout(MainActivity.this);
+                layout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                        .LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams
+                        .MATCH_PARENT));
+                layout.setOrientation(LinearLayout.VERTICAL);
 
 
-                        String[] list = new String[]{"分享","投诉","添加到桌面","关于%s"};
+                String[] list = new String[]{"分享","投诉","添加到桌面","关于%s"};
 
-                        for (String item : list) {
-                            TextView text = new TextView(MainActivity.this);
+                for (String item : list) {
+                    TextView text = new TextView(MainActivity.this);
 
-                            text.setText(String.format(item, appTitle));
-                            text.setTextColor(Color.parseColor("black"));
-                            text.setTextSize(17);
-                            text.setLayoutParams(new LinearLayout.LayoutParams
-                                    (LinearLayout
-                                            .LayoutParams.MATCH_PARENT, dip2px(44)));
-                            text.setGravity(Gravity.CENTER);
-                            text.setPadding(-2, -2, -2, 0);
-                            text.setClickable(true);
-                            text.setFocusable(true);
-                            text.setBackground(drawable);
+                    text.setText(String.format(item, appTitle));
+                    text.setTextColor(Color.parseColor("black"));
+                    text.setTextSize(17);
+                    text.setLayoutParams(new LinearLayout.LayoutParams
+                            (LinearLayout
+                                    .LayoutParams.MATCH_PARENT, dip2px(44)));
+                    text.setGravity(Gravity.CENTER);
+                    text.setPadding(-2, -2, -2, 0);
+                    text.setBackgroundResource(R.drawable.selector_menu_item);
+                    text.setClickable(true);
+                    text.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                            view.addView(text);
                         }
+                    });
 
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setView(view)
-                                .create().show();
+                    layout.addView(text);
+                }
 
-                    }
+                new AlertDialog.Builder(MainActivity.this)
+                        .setView(layout)
+                        .create().show();
 
-                });
+
             }
 
         });
