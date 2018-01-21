@@ -7,9 +7,9 @@ H5 APP 框架应用 ( 别名：小程序 ) ，提供JS API 供开发者使用，
 ![演示界面](https://github.com/haowei4032/apps/raw/master/preview/664023026.jpg)
 
 ### 测试JS API
-```javascript
+```java
 
-apps.setNavigatorTitle(string text); // 设置状态栏标题
+void apps.setNavigatorTitle(String text); // 设置状态栏标题
 apps.setNavigatorBarColor(string color); // 设置状态栏颜色
 apps.open(string url); // 打开新页面
 apps.vibrate(); // 震动

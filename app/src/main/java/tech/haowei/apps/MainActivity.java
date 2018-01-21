@@ -405,6 +405,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        Log.e("ACTIVITY.PAUSE", "webView JavaScript disabled");
+        webView.getSettings().setJavaScriptEnabled(false);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.e("ACTIVITY.PAUSE", "webView JavaScript enabled");
+        webView.getSettings().setJavaScriptEnabled(true);
+        super.onResume();
+    }
+
     public int dip2px(int dip) {
         final float scale = getResources().getDisplayMetrics().density;
         return (int) (scale * dip + 0.5f);
